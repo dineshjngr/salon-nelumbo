@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, Menu, X } from "lucide-react";
 import { navigation, salon } from "@/src/data/site-data";
 import { SiteContainer } from "@/src/components/ui/SiteContainer";
+import { SalonLogo } from "@/src/components/ui/SalonLogo";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
@@ -48,11 +49,16 @@ export function Header() {
             <Link
               href="/"
               aria-label="Salon Nelumbo home"
-              className={`origin-left font-serif text-[26px] font-semibold leading-none text-[var(--primary)] transition-transform duration-[350ms] ease-[cubic-bezier(0.22,1,0.36,1)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--primary)] md:text-[27px] lg:text-[28px] ${
+              className={`origin-left transition-transform duration-[350ms] ease-[cubic-bezier(0.22,1,0.36,1)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--primary)] ${
                 isScrolled ? "scale-[0.92]" : "scale-100"
               }`}
             >
-              Nelumbo
+              <SalonLogo
+                priority
+                className={`block h-[34px] w-auto object-contain md:h-[38px] lg:h-[44px] ${
+                  isScrolled ? "md:h-[34px] lg:h-[40px]" : ""
+                }`}
+              />
             </Link>
 
             <nav aria-label="Primary navigation" className="hidden lg:block">
@@ -114,9 +120,9 @@ export function Header() {
                 <Link
                   href="/"
                   onClick={() => setIsOpen(false)}
-                  className="font-serif text-[30px] font-semibold text-[var(--primary)]"
+                  className="focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--primary)]"
                 >
-                  Nelumbo
+                  <SalonLogo className="block h-[34px] w-auto object-contain" />
                 </Link>
                 <button
                   type="button"

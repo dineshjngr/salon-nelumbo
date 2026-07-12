@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { salon } from "@/src/data/site-data";
 import { SiteContainer } from "@/src/components/ui/SiteContainer";
+import { SalonLogo } from "@/src/components/ui/SalonLogo";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
@@ -209,8 +210,8 @@ function FooterColumns() {
         variants={colVariants}
         className="max-w-[360px]"
       >
-        <Link href="/" className="font-serif text-[28px] font-semibold leading-none text-[var(--primary)]">
-          Salon Nelumbo
+        <Link href="/" aria-label="Salon Nelumbo home" className="inline-flex focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--primary)]">
+          <SalonLogo className="block h-auto w-[190px] object-contain md:w-[210px] lg:w-[220px]" />
         </Link>
         <p className="mt-5 max-w-[330px] text-[15px] leading-[1.7] text-[#736A76]">
           Hair, beauty, nail and relaxation services in Dubai.
@@ -284,8 +285,8 @@ function MobileFooterContent({ year }: { year: number }) {
         transition={{ duration: 0.55, ease: easeOut }}
         className="max-w-none"
       >
-        <Link href="/" className="font-serif text-[28px] font-semibold leading-none text-[var(--primary)]">
-          Salon Nelumbo
+        <Link href="/" aria-label="Salon Nelumbo home" className="inline-flex focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--primary)]">
+          <SalonLogo className="block h-auto w-[190px] object-contain" />
         </Link>
         <p className="mt-4 max-w-sm text-[15px] leading-7 text-[#736A76]">
           Hair, beauty, nail and relaxation services in Dubai.

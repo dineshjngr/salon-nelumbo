@@ -89,7 +89,7 @@ export function FloatingContactDock() {
   const dockWidthClass = useMemo(
     () =>
       isTouch
-        ? "right-4 w-[min(340px,calc(100vw-32px))] bottom-[calc(env(safe-area-inset-bottom)+16px)]"
+        ? "right-[var(--site-gutter)] w-[min(320px,calc(100vw-40px))] bottom-[calc(env(safe-area-inset-bottom)+76px)]"
         : "right-7 w-[340px] bottom-7",
     [isTouch]
   );
@@ -326,7 +326,7 @@ export function FloatingContactDock() {
             exit={{ opacity: 0, y: shouldReduceMotion ? 0 : 12, scale: shouldReduceMotion ? 1 : 0.96, filter: shouldReduceMotion ? "none" : "blur(6px)" }}
             transition={{ duration: 0.35, ease: easeOut }}
             className={`absolute right-0 bottom-[calc(100%+14px)] overflow-hidden rounded-[26px] border border-white/45 bg-[rgba(255,255,255,0.62)] shadow-[0_18px_60px_rgba(84,37,104,0.14)] backdrop-blur-[18px] supports-[not(backdrop-filter:blur(1px))]:bg-white ${
-              isTouch ? "w-[min(340px,calc(100vw-32px))]" : "min-w-[320px]"
+              isTouch ? "w-[min(320px,calc(100vw-40px))]" : "min-w-[320px]"
             }`}
             onMouseMove={handleWidgetActivity}
             onTouchStart={handleWidgetActivity}
@@ -390,9 +390,9 @@ export function FloatingContactDock() {
             keyboardOpenRef.current = !expanded;
           }
         }}
-        className="group relative flex h-[68px] w-[68px] flex-shrink-0 self-end items-center justify-center rounded-full bg-[var(--primary)] text-white shadow-[0_18px_60px_rgba(84,37,104,0.22)] transition duration-300 hover:scale-[1.08] hover:shadow-[0_0_0_8px_rgba(201,174,212,0.18),0_18px_60px_rgba(84,37,104,0.22)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--primary)]"
+        className="group relative flex h-14 w-14 flex-shrink-0 self-end items-center justify-center rounded-full bg-[var(--primary)] text-white shadow-[0_18px_60px_rgba(84,37,104,0.22)] transition duration-300 hover:scale-[1.08] hover:shadow-[0_0_0_8px_rgba(201,174,212,0.18),0_18px_60px_rgba(84,37,104,0.22)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--primary)] md:h-[68px] md:w-[68px]"
       >
-        <MessageCircle className="h-6 w-6" aria-hidden="true" />
+        <MessageCircle className="h-5 w-5 md:h-6 md:w-6" aria-hidden="true" />
       </motion.button>
     </div>
   );

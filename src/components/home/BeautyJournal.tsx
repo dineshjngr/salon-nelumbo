@@ -11,7 +11,7 @@ export function BeautyJournal() {
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <section id="beauty-journal" className="bg-white px-[clamp(24px,5vw,96px)] py-24 lg:py-32">
+    <section id="beauty-journal" className="bg-white px-[var(--site-gutter)] py-14 md:px-[clamp(24px,5vw,96px)] md:py-24 lg:py-32">
       <div className="mx-auto max-w-[1440px]">
         <SectionHeading
           label="The Beauty Journal"
@@ -33,7 +33,7 @@ export function BeautyJournal() {
                 </div>
                 <div className="pt-6">
                   <span className="rounded-full border border-[var(--border)] px-4 py-2 text-xs font-medium uppercase tracking-[0.12em] text-[var(--primary)] transition group-hover:bg-[var(--primary)] group-hover:text-white">{post.category}</span>
-                  <h3 className="mt-6 font-serif text-4xl font-semibold leading-tight text-[var(--text)] transition group-hover:translate-x-1">{post.title}</h3>
+                  <h3 className="mt-6 font-serif text-[28px] font-semibold leading-tight text-[var(--text)] transition group-hover:translate-x-1 md:text-4xl">{post.title}</h3>
                   <p className="mt-4 text-sm leading-7 text-[var(--muted)]">{post.excerpt}</p>
                   <span className="mt-5 inline-flex items-center text-sm font-medium text-[var(--primary)]">
                     Read article <ArrowRight aria-hidden="true" className="ml-2 h-4 w-4 transition group-hover:translate-x-1" />

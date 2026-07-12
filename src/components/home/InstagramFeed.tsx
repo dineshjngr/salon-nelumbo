@@ -17,18 +17,18 @@ export function InstagramFeed() {
   return (
     <section id="instagram" className="section-space bg-[#FAF7FC]">
       <SiteContainer>
-        <div className="grid gap-10 lg:grid-cols-[1fr_0.8fr] lg:items-end">
+        <div className="grid gap-8 lg:grid-cols-[1fr_0.8fr] lg:items-end">
           <div>
             <p className="mb-5 flex items-center gap-3 text-[12px] font-medium uppercase tracking-[0.18em] text-[var(--muted)]">
               <span className="h-px w-8 bg-[var(--primary)]/45" />
               Follow Our Beauty Journey
             </p>
-            <h2 className="font-serif text-[46px] font-semibold leading-[0.98] text-[var(--text)] sm:text-[58px] lg:text-[72px]">
+            <h2 className="font-serif text-[32px] font-semibold leading-[0.98] text-[var(--text)] md:text-[58px] lg:text-[72px]">
               See our latest salon moments
               <br />
               and client transformations.
             </h2>
-            <p className="mt-6 max-w-xl text-base leading-8 text-[var(--muted)] md:text-lg">
+            <p className="mt-5 max-w-xl text-[15px] leading-7 text-[var(--muted)] md:mt-6 md:text-base md:leading-8 lg:text-lg">
               See our latest work, salon moments, client transformations and daily updates on Instagram.
               Enjoy a luxury editorial gallery of curated beauty imagery.
             </p>
@@ -45,7 +45,7 @@ export function InstagramFeed() {
           </div>
         </div>
 
-        <div className="mt-12 grid grid-cols-2 gap-4 xl:grid-cols-3">
+        <div className="mt-10 grid grid-cols-2 gap-4 md:mt-12 xl:grid-cols-3">
           {feedItems.map((item, index) => (
             <motion.a
               key={item.src}

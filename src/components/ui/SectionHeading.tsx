@@ -41,7 +41,7 @@ export function SectionHeading({
         whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.75, delay: 0.08, ease: easeOut }}
-        className="font-serif text-[42px] font-semibold leading-[0.98] text-[var(--text)] sm:text-[58px] lg:text-[70px]"
+        className="font-serif text-[32px] font-semibold leading-[1] text-[var(--text)] md:text-[58px] lg:text-[70px]"
       >
         {title}
       </motion.h2>
@@ -51,7 +51,7 @@ export function SectionHeading({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.65, delay: 0.2, ease: easeOut }}
-          className={`mt-6 max-w-xl text-base leading-8 text-[var(--muted)] md:text-lg ${
+          className={`mt-6 max-w-xl text-[15px] leading-7 text-[var(--muted)] md:text-base md:leading-8 ${
             align === "center" ? "mx-auto" : ""
           }`}
         >

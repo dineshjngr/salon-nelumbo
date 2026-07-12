@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
+  useCallback,
   useEffect,
   useLayoutEffect,
   useMemo,
@@ -16,7 +17,8 @@ import { packages, packageBookingUrl } from "@/src/data/packages";
 import { images } from "@/src/data/images";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
-const autoplayMs = 5500;
+const autoplayDelay = 3500;
+const desktopAutoplaySpeed = 650;
 
 const visuals = [
   images.hair,
@@ -43,295 +45,274 @@ function useMediaQuery(query: string) {
   );
 }
 
-function wrapIndex(index: number) {
-  return (index + packages.length) % packages.length;
+function getPerView(width: number, isMobile: boolean) {
+  if (isMobile) {
+    return 1.08;
+  }
+
+  if (width >= 1440) {
+    return 2.5;
+  }
+
+  if (width >= 1280) {
+    return 2;
+  }
+
+  if (width >= 1024) {
+    return 2;
+  }
+
+  return 1.5;
+}
+
+function getGap(width: number, isMobile: boolean) {
+  if (isMobile) {
+    return 16;
+  }
+
+  return width >= 1280 ? 24 : 20;
 }
 
 export function PackageCarousel() {
   const shouldReduceMotion = useReducedMotion();
   const isMobile = useMediaQuery("(max-width: 767px)");
-  const [active, setActive] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const [dragging, setDragging] = useState(false);
-  const [cardWidth, setCardWidth] = useState(430);
+  const [active, setActive] = useState(packages.length);
   const [viewportWidth, setViewportWidth] = useState(0);
+  const [cardWidth, setCardWidth] = useState(360);
+  const [hovered, setHovered] = useState(false);
+  const [dragging, setDragging] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const [isHidden, setIsHidden] = useState(false);
   const viewportRef = useRef<HTMLDivElement>(null);
-  const firstCardRef = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
-
-  const gap = isMobile ? 16 : 36;
+  const slides = useMemo(() => [...packages, ...packages, ...packages], []);
+  const cycleLength = packages.length;
+  const perView = getPerView(viewportWidth, isMobile);
+  const gap = getGap(viewportWidth, isMobile);
   const step = cardWidth + gap;
+  const visibleCount = Math.min(cycleLength, Math.max(1, Math.ceil(perView)));
+  const moveBy = useCallback(
+    (delta: number) => {
+      setActive((current) => {
+        const next = current + delta;
+
+        if (next >= cycleLength * 2) {
+          return next - cycleLength;
+        }
+
+        if (next < cycleLength) {
+          return next + cycleLength;
+        }
+
+        return next;
+      });
+    },
+    [cycleLength]
+  );
 
   useLayoutEffect(() => {
     const viewport = viewportRef.current;
-    const card = firstCardRef.current;
-
-    if (!viewport || !card) {
+    if (!viewport) {
       return;
     }
 
     const updateSizes = () => {
       const viewportRect = viewport.getBoundingClientRect();
-      const cardRect = card.getBoundingClientRect();
-      setViewportWidth(viewportRect.width);
-      setCardWidth(cardRect.width);
+      const nextWidth = viewportRect.width;
+      const nextPerView = getPerView(nextWidth, isMobile);
+      const nextGap = getGap(nextWidth, isMobile);
+      const nextCardWidth = (nextWidth - nextGap * (nextPerView - 1)) / nextPerView;
+
+      setViewportWidth(nextWidth);
+      setCardWidth(nextCardWidth);
     };
 
     updateSizes();
+
     const observer = new ResizeObserver(updateSizes);
     observer.observe(viewport);
-    observer.observe(card);
 
     return () => observer.disconnect();
   }, [isMobile]);
 
-  const targetX = useMemo(() => {
-    if (!viewportWidth) {
-      return 0;
+  useLayoutEffect(() => {
+    if (!viewportWidth || !cardWidth) {
+      return;
     }
 
-    return viewportWidth / 2 - cardWidth / 2 - active * step;
-  }, [active, cardWidth, step, viewportWidth]);
+    x.set(-active * step);
+  }, [active, cardWidth, step, viewportWidth, x]);
 
   useEffect(() => {
-    const controls = animate(x, targetX, {
-      duration: shouldReduceMotion ? 0.15 : 0.55,
-      ease: easeOut,
-    });
-
-    return () => controls.stop();
-  }, [shouldReduceMotion, targetX, x]);
-
-  useEffect(() => {
-    const update = () => setPaused(document.hidden);
+    const update = () => setIsHidden(document.hidden);
+    update();
     document.addEventListener("visibilitychange", update);
+
     return () => document.removeEventListener("visibilitychange", update);
   }, []);
 
   useEffect(() => {
-    if (shouldReduceMotion || paused || dragging || isMobile) {
+    if (shouldReduceMotion || hovered || dragging || focused || isHidden) {
       return;
     }
 
     const timer = window.setInterval(() => {
-      setActive((current) => wrapIndex(current + 1));
-    }, autoplayMs);
+      moveBy(1);
+    }, autoplayDelay);
 
     return () => window.clearInterval(timer);
-  }, [dragging, isMobile, paused, shouldReduceMotion]);
+  }, [dragging, focused, hovered, isHidden, moveBy, shouldReduceMotion]);
 
-  const pause = () => setPaused(true);
-  const resume = () => {
-    if (!dragging) {
-      setPaused(false);
-    }
+  useEffect(() => {
+    const controls = animate(x, -active * step, {
+      duration: shouldReduceMotion ? 0.15 : desktopAutoplaySpeed / 1000,
+      ease: easeOut,
+    });
+
+    return () => controls.stop();
+  }, [active, shouldReduceMotion, step, x]);
+
+  const movePrevious = () => {
+    moveBy(-1);
   };
 
-  function goPrevious() {
-    setActive((current) => wrapIndex(current - 1));
-  }
+  const moveNext = () => {
+    moveBy(1);
+  };
 
-  function goNext() {
-    setActive((current) => wrapIndex(current + 1));
-  }
-
-  function commitDrag() {
+  const onDragEnd = () => {
     const currentX = x.get();
+    const targetX = -active * step;
     const delta = currentX - targetX;
-    const direction = Math.abs(delta) < Math.max(72, step * 0.18) ? 0 : delta > 0 ? -1 : 1;
+    const threshold = Math.max(72, step * 0.18);
 
-    if (direction !== 0) {
-      setActive((current) => wrapIndex(current + direction));
+    if (Math.abs(delta) >= threshold) {
+      if (delta < 0) {
+        moveBy(1);
+      } else {
+        moveBy(-1);
+      }
     }
 
     setDragging(false);
-    setPaused(false);
-  }
+  };
+
+  const currentVisibleIndex = ((active - cycleLength) % cycleLength + cycleLength) % cycleLength;
+  const visibleStart = currentVisibleIndex + 1;
+  const visibleEnd = ((currentVisibleIndex + visibleCount - 1) % cycleLength) + 1;
+  const liveText = `Showing packages ${String(visibleStart).padStart(2, "0")} to ${String(visibleEnd).padStart(2, "0")} of ${cycleLength}`;
+
+  const carouselViewport = (
+    <div ref={viewportRef} className="w-full max-w-full overflow-hidden">
+      <motion.div
+        className="flex items-stretch"
+        style={{
+          x,
+          gap: `${gap}px`,
+          cursor: dragging ? "grabbing" : "grab",
+          touchAction: "pan-y",
+          willChange: "transform",
+        }}
+        drag={shouldReduceMotion ? false : "x"}
+        dragElastic={0.06}
+        dragMomentum={false}
+        onDragStart={() => {
+          setDragging(true);
+        }}
+        onDragEnd={onDragEnd}
+      >
+        {slides.map((salonPackage, index) => (
+          <div
+            key={`${salonPackage.id}-${index}`}
+            style={{ flex: `0 0 ${cardWidth}px` }}
+            className="min-w-0"
+          >
+            <PackageCard
+              salonPackage={salonPackage}
+              visual={visuals[salonPackage.id - 1]}
+              active={index === active}
+              mobile={isMobile}
+            />
+          </div>
+        ))}
+      </motion.div>
+    </div>
+  );
 
   return (
     <div
-      tabIndex={0}
       className="relative select-none outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--primary)]"
-      onMouseEnter={pause}
-      onMouseLeave={resume}
-      onFocusCapture={pause}
+      tabIndex={0}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onFocusCapture={() => setFocused(true)}
       onBlurCapture={(event) => {
         if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
-          setPaused(false);
+          setFocused(false);
         }
       }}
       onKeyDown={(event) => {
         if (event.key === "ArrowLeft") {
           event.preventDefault();
-          goPrevious();
+          movePrevious();
         }
         if (event.key === "ArrowRight") {
           event.preventDefault();
-          goNext();
+          moveNext();
         }
       }}
     >
-      {!isMobile ? (
-        <div className="mx-auto grid max-w-[1440px] grid-cols-[auto,minmax(0,1fr),auto] items-center gap-4 lg:gap-6">
+      <p aria-live="polite" className="sr-only">
+        {liveText}
+      </p>
+
+      <div className="md:hidden">
+        {carouselViewport}
+        <div className="mt-5 flex items-center justify-between gap-3">
           <button
             type="button"
             aria-label="Previous package"
-            onClick={goPrevious}
-            onFocus={pause}
-            onBlur={resume}
-            className="group inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/45 bg-[rgba(255,255,255,0.66)] text-[var(--primary)] shadow-[0_18px_60px_rgba(84,37,104,0.10)] backdrop-blur-[18px] transition duration-300 hover:-translate-y-0.5 hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--primary)]"
+            onClick={movePrevious}
+            className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/45 bg-[rgba(255,255,255,0.66)] text-[var(--primary)] shadow-[0_18px_60px_rgba(84,37,104,0.10)] backdrop-blur-[18px] transition duration-300 hover:-translate-y-0.5 hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--primary)]"
           >
-            <ChevronLeft className="h-5 w-5 transition duration-300 group-hover:-translate-x-0.5" aria-hidden="true" />
+            <ChevronLeft className="h-5 w-5" aria-hidden="true" />
           </button>
-
-          <div
-            ref={viewportRef}
-            className="relative overflow-hidden py-6 outline-none"
-            style={{ perspective: 1800 }}
-          >
-            <motion.div
-              className="flex items-stretch"
-              style={{ x, cursor: dragging ? "grabbing" : "grab" }}
-              drag={shouldReduceMotion ? false : "x"}
-              dragElastic={0.08}
-              dragMomentum={false}
-              onDragStart={() => {
-                setDragging(true);
-                setPaused(true);
-              }}
-              onDragEnd={() => commitDrag()}
-              onPointerDown={() => pause()}
-              onPointerUp={() => resume()}
-            >
-              {packages.map((salonPackage, index) => {
-                const offset = index - active;
-                const visual = visuals[index % visuals.length];
-                const absOffset = Math.abs(offset);
-                const isActive = offset === 0;
-                const isNeighbour = absOffset === 1;
-                const isFar = absOffset > 2;
-
-                return (
-                  <motion.div
-                    key={salonPackage.id}
-                    ref={index === 0 ? firstCardRef : undefined}
-                    data-cursor-card="true"
-                    className="flex-[0_0_clamp(340px,30vw,430px)]"
-                    animate={
-                      shouldReduceMotion
-                        ? {
-                            opacity: isActive ? 1 : isNeighbour ? 0.66 : 0.22,
-                            scale: isActive ? 1 : 0.92,
-                            rotateY: 0,
-                            zIndex: isActive ? 5 : 1,
-                          }
-                        : {
-                            opacity: isActive ? 1 : isNeighbour ? 0.72 : 0.18,
-                            scale: isActive ? 1 : isNeighbour ? 0.9 : 0.82,
-                            rotateY: isActive ? 0 : offset < 0 ? 7 : -7,
-                            zIndex: isActive ? 5 : isNeighbour ? 3 : 1,
-                            filter: isFar ? "blur(2px)" : "blur(0px)",
-                          }
-                    }
-                    transition={{ duration: shouldReduceMotion ? 0.15 : 0.55, ease: easeOut }}
-                    style={{
-                      transformStyle: "preserve-3d",
-                      pointerEvents: isFar ? "none" : "auto",
-                      marginRight: index === packages.length - 1 ? 0 : gap,
-                    }}
-                  >
-                    <PackageCard salonPackage={salonPackage} visual={visual} active={isActive} />
-                  </motion.div>
-                );
-              })}
-            </motion.div>
-          </div>
 
           <button
             type="button"
             aria-label="Next package"
-            onClick={goNext}
-            onFocus={pause}
-            onBlur={resume}
-            className="group inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/45 bg-[rgba(255,255,255,0.66)] text-[var(--primary)] shadow-[0_18px_60px_rgba(84,37,104,0.10)] backdrop-blur-[18px] transition duration-300 hover:-translate-y-0.5 hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--primary)]"
+            onClick={moveNext}
+            className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/45 bg-[rgba(255,255,255,0.66)] text-[var(--primary)] shadow-[0_18px_60px_rgba(84,37,104,0.10)] backdrop-blur-[18px] transition duration-300 hover:-translate-y-0.5 hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--primary)]"
           >
-            <ChevronRight className="h-5 w-5 transition duration-300 group-hover:translate-x-0.5" aria-hidden="true" />
+            <ChevronRight className="h-5 w-5" aria-hidden="true" />
           </button>
         </div>
-      ) : (
-        <div className="-mx-[clamp(20px,5vw,96px)] overflow-x-auto px-[clamp(20px,5vw,96px)] pb-3">
-          <div className="flex snap-x snap-mandatory gap-4 pr-[18vw]">
-            {packages.map((salonPackage, index) => (
-              <div
-                key={salonPackage.id}
-                className="min-w-[84vw] snap-start sm:min-w-[58vw] md:min-w-[44vw]"
-              >
-                <PackageCard
-                  salonPackage={salonPackage}
-                  visual={visuals[index % visuals.length]}
-                  active={index === active}
-                  mobile
-                />
-              </div>
-            ))}
-          </div>
-          <div className="mt-5 flex items-center justify-between gap-3">
-            <button
-              type="button"
-              aria-label="Previous package"
-              onClick={goPrevious}
-              className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/45 bg-[rgba(255,255,255,0.66)] text-[var(--primary)] shadow-[0_18px_60px_rgba(84,37,104,0.10)] backdrop-blur-[18px] transition hover:-translate-y-0.5 hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--primary)]"
-            >
-              <ChevronLeft className="h-5 w-5" aria-hidden="true" />
-            </button>
+      </div>
 
-            <div className="flex flex-1 items-center justify-center gap-2">
-              {packages.map((packageItem, index) => (
-                <button
-                  key={packageItem.id}
-                  type="button"
-                  onClick={() => setActive(index)}
-                  aria-label={`Show package ${String(packageItem.id).padStart(2, "0")}`}
-                  aria-current={index === active ? "true" : undefined}
-                  className={`h-2 rounded-full transition-all duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--primary)] ${
-                    index === active ? "w-8 bg-[var(--primary)]" : "w-2 bg-[var(--border)]"
-                  }`}
-                />
-              ))}
-            </div>
+      <div className="relative hidden px-14 md:block lg:px-16">
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-20 w-14 bg-[linear-gradient(to_right,rgba(250,247,252,1),rgba(250,247,252,0))]" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-20 w-14 bg-[linear-gradient(to_left,rgba(250,247,252,1),rgba(250,247,252,0))]" />
 
-            <button
-              type="button"
-              aria-label="Next package"
-              onClick={goNext}
-              className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/45 bg-[rgba(255,255,255,0.66)] text-[var(--primary)] shadow-[0_18px_60px_rgba(84,37,104,0.10)] backdrop-blur-[18px] transition hover:-translate-y-0.5 hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--primary)]"
-            >
-              <ChevronRight className="h-5 w-5" aria-hidden="true" />
-            </button>
-          </div>
-        </div>
-      )}
+        <button
+          type="button"
+          aria-label="Previous package"
+          onClick={movePrevious}
+          className="absolute left-2 top-1/2 z-30 inline-flex h-[52px] w-[52px] -translate-y-1/2 items-center justify-center rounded-full border border-white/55 bg-[rgba(255,255,255,0.72)] text-[var(--primary)] shadow-[0_14px_40px_rgba(84,37,104,0.14)] backdrop-blur-[16px] transition duration-300 hover:-translate-x-1 hover:border-[rgba(84,37,104,0.24)] hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--primary)]"
+        >
+          <ChevronLeft className="h-5 w-5 transition duration-300" aria-hidden="true" />
+        </button>
 
-      {!isMobile ? (
-        <div className="mx-auto mt-8 flex max-w-[1440px] items-center justify-between gap-4">
-          <div className="flex flex-1 items-center justify-center gap-2">
-            {packages.map((packageItem, index) => (
-              <button
-                key={packageItem.id}
-                type="button"
-                onClick={() => setActive(index)}
-                onFocus={pause}
-                onBlur={resume}
-                aria-label={`Show package ${String(packageItem.id).padStart(2, "0")}`}
-                aria-current={index === active ? "true" : undefined}
-                className={`h-2 rounded-full transition-all duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--primary)] ${
-                  index === active ? "w-8 bg-[var(--primary)]" : "w-2 bg-[var(--border)]"
-                }`}
-              />
-            ))}
-          </div>
-        </div>
-      ) : null}
+        <button
+          type="button"
+          aria-label="Next package"
+          onClick={moveNext}
+          className="absolute right-2 top-1/2 z-30 inline-flex h-[52px] w-[52px] -translate-y-1/2 items-center justify-center rounded-full border border-white/55 bg-[rgba(255,255,255,0.72)] text-[var(--primary)] shadow-[0_14px_40px_rgba(84,37,104,0.14)] backdrop-blur-[16px] transition duration-300 hover:translate-x-1 hover:border-[rgba(84,37,104,0.24)] hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--primary)]"
+        >
+          <ChevronRight className="h-5 w-5 transition duration-300" aria-hidden="true" />
+        </button>
+
+        {carouselViewport}
+      </div>
     </div>
   );
 }
@@ -347,32 +328,37 @@ function PackageCard({
   active: boolean;
   mobile?: boolean;
 }) {
+  const visibleItems = salonPackage.items.slice(0, 4);
+  const extraCount = salonPackage.items.length - visibleItems.length;
+
   return (
     <motion.article
-      className="group flex min-h-[590px] flex-col overflow-hidden rounded-[28px] border border-[var(--border)] bg-white/72 shadow-[0_18px_60px_rgba(84,37,104,0.08)]"
+      className={`group flex h-full flex-col overflow-hidden rounded-[28px] border border-[var(--border)] bg-white/72 shadow-[0_18px_60px_rgba(84,37,104,0.08)] ${
+        mobile ? "h-[520px]" : "h-[560px]"
+      }`}
       transition={{ duration: 0.45, ease: easeOut }}
       whileHover={mobile ? undefined : { y: -8 }}
     >
-      <div className="relative h-[220px] overflow-hidden">
+      <div className="relative h-[210px] flex-shrink-0 overflow-hidden md:h-[220px]">
         <Image
           src={visual.src}
           alt={visual.alt}
           fill
-          sizes="(min-width: 1280px) 430px, (min-width: 768px) 60vw, 84vw"
+          sizes="(min-width: 1440px) 26vw, (min-width: 1280px) 33vw, (min-width: 1024px) 44vw, 88vw"
           draggable={false}
-          className="object-cover transition duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-110"
+          className="object-cover transition duration-[650ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-white/0 via-transparent to-[#271D2C]/14 transition duration-500 group-hover:to-[#271D2C]/24" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.24),transparent_45%)] opacity-70 transition duration-500 group-hover:opacity-100" />
       </div>
 
-      <div className="flex flex-1 flex-col p-6">
+      <div className="flex flex-1 min-w-0 flex-col p-[22px] md:p-6 lg:p-7">
         <div className="flex items-start justify-between gap-4">
-          <div className="min-w-0">
+          <div className="min-w-0 flex-1">
             <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-[var(--muted)]">
               Package {String(salonPackage.id).padStart(2, "0")}
             </p>
-            <h3 className="mt-2 font-serif text-[30px] font-semibold leading-none text-[var(--text)]">
+            <h3 className="mt-2 min-w-0 break-words font-serif text-[clamp(28px,8vw,36px)] font-semibold leading-[1.05] text-[var(--text)]">
               {salonPackage.title}
             </h3>
           </div>
@@ -380,7 +366,9 @@ function PackageCard({
             <p className="font-serif text-[32px] font-semibold leading-none text-[var(--primary)] transition duration-500 group-hover:drop-shadow-[0_0_18px_rgba(84,37,104,0.20)]">
               99
             </p>
-            <p className="mt-1 text-[11px] font-medium uppercase tracking-[0.12em] text-[var(--muted)]">AED</p>
+            <p className="mt-1 text-[11px] font-medium uppercase tracking-[0.12em] text-[var(--muted)]">
+              AED
+            </p>
           </div>
         </div>
 
@@ -392,20 +380,26 @@ function PackageCard({
           </div>
         ) : null}
 
-        <ul className="mt-5 space-y-3">
-          {salonPackage.items.map((item) => (
-            <li key={item} className="flex gap-3 text-sm leading-6 text-[var(--muted)]">
+        <ul className="mt-5 flex min-h-0 flex-1 min-w-0 flex-col gap-3 overflow-hidden">
+          {visibleItems.map((item) => (
+            <li key={item} className="flex min-w-0 gap-3 text-[14px] leading-6 text-[var(--muted)]">
               <Check className="mt-1 h-4 w-4 shrink-0 text-[var(--accent)]" aria-hidden="true" />
-              {item}
+              <span className="min-w-0 break-words">{item}</span>
             </li>
           ))}
+          {extraCount > 0 ? (
+            <li className="flex min-w-0 gap-3 text-[14px] leading-6 text-[var(--muted)]">
+              <Check className="mt-1 h-4 w-4 shrink-0 text-[var(--accent)]" aria-hidden="true" />
+              <span className="min-w-0 break-words">+ {extraCount} more services</span>
+            </li>
+          ) : null}
         </ul>
 
         <Link
           href={packageBookingUrl(salonPackage.id)}
           target="_blank"
           rel="noopener noreferrer"
-          className="group/cta mt-auto inline-flex min-h-12 items-center justify-center rounded-full bg-[var(--primary)] px-5 text-sm font-medium uppercase tracking-[0.08em] text-white transition duration-500 hover:bg-[var(--primary-dark)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--primary)]"
+          className="group/cta mt-auto inline-flex h-[54px] w-full flex-shrink-0 items-center justify-center rounded-full bg-[var(--primary)] px-5 text-sm font-medium uppercase tracking-[0.08em] text-white transition duration-500 hover:bg-[var(--primary-dark)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--primary)]"
         >
           Book Package
           <ArrowUpRight

@@ -49,17 +49,17 @@ export function SalonExperience() {
         </div>
       </div>
 
-      <div className="px-[clamp(24px,5vw,96px)] py-24 lg:hidden">
+      <div className="px-[var(--site-gutter)] py-14 md:px-[clamp(24px,5vw,96px)] md:py-24 lg:hidden">
         <SectionHeading
           label="Your Visit"
           title={<>From arrival<br /><span className="italic text-[#9B72B3]">to afterglow.</span></>}
           description="A calm, thoughtful experience designed around comfort, care and confidence."
         />
-        <div className="mt-12 flex snap-x gap-4 overflow-x-auto pb-4">
+        <div className="mt-10 flex snap-x gap-4 overflow-x-auto pb-4">
           {experienceSteps.map((step) => {
             const Icon = step.icon;
             return (
-              <article key={step.title} className="relative h-[430px] w-[82vw] shrink-0 snap-start overflow-hidden rounded-[28px]">
+              <article key={step.title} className="relative h-[400px] w-[82vw] shrink-0 snap-start overflow-hidden rounded-[28px]">
                 <Image src={step.image} alt={step.alt} fill sizes="82vw" className="object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#271D2C]/82 to-transparent" />
                 <GlassPanel className="absolute inset-x-5 bottom-5 rounded-[22px] p-5">

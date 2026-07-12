@@ -15,7 +15,7 @@ export function FeaturedCategories() {
   return (
     <section
       id="featured-categories"
-      className="relative z-10 -mt-[50px] bg-[#FAF7FC] px-5 pb-[96px] pt-[120px] md:px-8 md:pb-[116px] lg:px-12 lg:pb-[130px] xl:px-16"
+      className="relative z-10 bg-[#FAF7FC] px-[var(--site-gutter)] pb-[72px] pt-16 md:-mt-[50px] md:px-8 md:pb-[116px] md:pt-[120px] lg:px-12 lg:pb-[130px] xl:px-16"
     >
       <div className="mx-auto max-w-[1280px] xl:max-w-[1360px]">
         <div className="grid gap-6 md:gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(320px,0.8fr)] lg:items-end lg:gap-[72px]">

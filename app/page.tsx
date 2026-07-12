@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
@@ -35,11 +36,120 @@ const fadeUp: Variants = {
 
 export default function Home() {
   return (
-      <main className="min-h-screen bg-[#F8F3FC] text-[#241B2F]">
-        <ScrollProgress />
-        <Header />
+    <main className="min-h-screen bg-[#F8F3FC] text-[#241B2F]">
+      <ScrollProgress />
+      <Header />
 
-      <section className="relative min-h-screen overflow-hidden">
+      <section className="relative overflow-hidden bg-[#F8F3FC] pb-14 pt-24 md:hidden">
+        <SiteContainer className="relative">
+          <motion.div
+            initial={{ opacity: 0, y: 24, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.8, ease: easeOut }}
+            className="space-y-6"
+          >
+            <motion.p
+              custom={0.12}
+              initial="hidden"
+              animate="visible"
+              variants={fadeUp}
+              className="text-[11px] font-medium uppercase tracking-[0.22em] text-[#6E6476]"
+            >
+              Beauty • Care • Relaxation
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 22, scale: 0.985 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.9, ease: easeOut, delay: 0.08 }}
+              className="relative aspect-[4/5] overflow-hidden rounded-[34px] border border-white/60 bg-[#EDE3F2] shadow-[0_18px_60px_rgba(84,37,104,0.12)]"
+            >
+              <Image
+                src="/salon-hero-banner.png"
+                alt="Salon Nelumbo hero banner with elegant salon model"
+                fill
+                priority
+                sizes="100vw"
+                className="object-cover object-[center_right]"
+              />
+              <div
+                className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0)_20%,rgba(52,20,70,0.22)_60%,rgba(32,12,42,0.68)_100%)]"
+                aria-hidden="true"
+              />
+              <div
+                className="pointer-events-none absolute -right-8 top-[-24px] h-32 w-32 rounded-full bg-[#EDE3F2]/55 blur-3xl"
+                aria-hidden="true"
+              />
+              <div
+                className="pointer-events-none absolute -bottom-10 left-6 h-24 w-24 rounded-full bg-[#D8CBE7]/45 blur-3xl"
+                aria-hidden="true"
+              />
+              <div className="absolute inset-x-0 top-0 p-5 text-center">
+                <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white/90">
+                  Your Beauty Destination
+                </p>
+              </div>
+              <div className="absolute inset-x-0 bottom-0 p-5">
+                <div className="max-w-[85%]">
+                  <h1 className="font-serif text-[40px] font-semibold leading-[0.92] text-white">
+                    Beauty
+                    <br />
+                    that feels
+                    <br />
+                    like you.
+                  </h1>
+                  <p className="mt-4 max-w-[85%] text-[15px] leading-7 text-white/90">
+                    Professional salon services designed to bring out your natural confidence.
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div
+              custom={0.28}
+              initial="hidden"
+              animate="visible"
+              variants={fadeUp}
+              className="flex flex-col gap-3"
+            >
+              <Link
+                href="/contact"
+                className="group inline-flex h-14 items-center justify-center rounded-full bg-[#5B2C83] px-7 text-[14px] font-medium uppercase tracking-[0.08em] text-white transition duration-200 hover:bg-[#4B226E] active:scale-[0.98]"
+              >
+                Book Appointment
+                <ArrowRight
+                  aria-hidden="true"
+                  className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1"
+                />
+              </Link>
+              <Link
+                href="/services"
+                className="group inline-flex h-14 items-center justify-center rounded-full border border-[rgba(84,37,104,0.18)] bg-white/80 px-7 text-[14px] font-medium uppercase tracking-[0.08em] text-[#5B2C83] transition duration-200 active:scale-[0.98]"
+              >
+                <span className="relative after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-[#5B2C83] after:transition-all after:duration-300 group-hover:after:w-full">
+                  Explore Services
+                </span>
+                <ArrowRight
+                  aria-hidden="true"
+                  className="ml-3 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1"
+                />
+              </Link>
+            </motion.div>
+
+            <motion.p
+              custom={0.34}
+              initial="hidden"
+              animate="visible"
+              variants={fadeUp}
+              className="text-center text-[12px] font-medium uppercase tracking-[0.18em] text-[#6E6476]"
+            >
+              Swipe to explore
+            </motion.p>
+          </motion.div>
+        </SiteContainer>
+      </section>
+
+      <section className="relative hidden min-h-screen overflow-hidden md:block">
         <motion.div
           initial={{ scale: 1.04 }}
           animate={{ scale: 1 }}

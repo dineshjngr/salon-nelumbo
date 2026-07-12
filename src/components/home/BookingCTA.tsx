@@ -13,15 +13,15 @@ export function BookingCTA() {
   const y = useTransform(scrollYProgress, [0, 1], shouldReduceMotion ? [0, 0] : [-18, 18]);
 
   return (
-    <section id="booking-cta" className="bg-white px-[clamp(24px,5vw,96px)] py-20 lg:py-28">
+    <section id="booking-cta" className="bg-white px-[var(--site-gutter)] py-14 md:px-[clamp(24px,5vw,96px)] md:py-20 lg:py-28">
       <div className="mx-auto max-w-[1440px] overflow-hidden rounded-[38px]">
-        <div className="relative min-h-[620px] overflow-hidden">
+        <div className="relative min-h-[520px] overflow-hidden md:min-h-[620px]">
           <motion.div style={{ y }} className="absolute inset-0 scale-105">
             <Image src="/images/booking/booking-cta.jpg" alt="Luxurious salon appointment setting" fill sizes="100vw" className="object-cover" />
           </motion.div>
           <div className="absolute inset-0 bg-[#271D2C]/62" />
-          <div className="relative z-10 flex min-h-[620px] items-center px-[clamp(24px,5vw,96px)] py-16">
-            <GlassPanel className="max-w-xl rounded-[30px] p-8 text-[var(--text)] md:p-10">
+          <div className="relative z-10 flex min-h-[520px] items-center px-[var(--site-gutter)] py-12 md:min-h-[620px] md:px-[clamp(24px,5vw,96px)] md:py-16">
+            <GlassPanel className="max-w-xl rounded-[28px] p-6 text-[var(--text)] md:rounded-[30px] md:p-8 lg:p-10">
               <p className="text-[12px] font-medium uppercase tracking-[0.18em] text-[var(--primary)]">Your Next Appointment</p>
               <h2 className="mt-5 font-serif text-[54px] font-semibold leading-none md:text-[78px]">
                 Make time
@@ -34,7 +34,7 @@ export function BookingCTA() {
                   <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition duration-700 group-hover:translate-x-full" />
                   <span className="relative inline-flex items-center">Book on WhatsApp <AnimatedArrow className="ml-2" /></span>
                 </MagneticButton>
-                <a href="tel:+971501201938" className="inline-flex min-h-12 items-center justify-center rounded-full border border-[var(--border)] px-7 text-sm font-medium text-[var(--primary)] transition hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--primary)]">
+                <a href="tel:+971501201938" className="inline-flex min-h-14 items-center justify-center rounded-full border border-[var(--border)] px-7 text-sm font-medium text-[var(--primary)] transition hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--primary)] md:min-h-12">
                   <Phone aria-hidden="true" className="mr-2 h-4 w-4" />
                   Call 050 120 1938
                 </a>

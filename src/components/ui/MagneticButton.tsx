@@ -48,7 +48,7 @@ export function MagneticButton({
         target={target}
         rel={rel}
         onMouseMove={onMove}
-        className={`group inline-flex min-h-12 items-center justify-center rounded-full bg-[var(--primary)] px-7 text-sm font-medium uppercase tracking-[0.08em] text-white transition duration-300 hover:bg-[var(--primary-dark)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--primary)] ${className}`}
+        className={`group inline-flex min-h-14 items-center justify-center rounded-full bg-[var(--primary)] px-7 text-sm font-medium uppercase tracking-[0.08em] text-white transition duration-300 hover:bg-[var(--primary-dark)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--primary)] md:min-h-12 ${className}`}
       >
         {children}
       </Link>

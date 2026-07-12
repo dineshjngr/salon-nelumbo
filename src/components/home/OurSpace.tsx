@@ -41,7 +41,7 @@ export function OurSpace() {
   }, [active]);
 
   return (
-    <section id="our-space" className="relative overflow-hidden bg-white px-[clamp(24px,5vw,96px)] py-24 lg:py-32">
+    <section id="our-space" className="relative overflow-hidden bg-white px-[var(--site-gutter)] py-14 md:px-[clamp(24px,5vw,96px)] md:py-24 lg:py-32">
       <div className="mx-auto max-w-[1440px]">
         <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
           <SectionHeading

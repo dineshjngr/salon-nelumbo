@@ -82,6 +82,20 @@ html {
   padding-block: clamp(80px, 10vw, 150px);
 }
 
+@media (max-width: 767px) {
+  :root {
+    --site-gutter: clamp(16px, 5vw, 20px);
+  }
+
+  .container-site {
+    padding-inline: var(--site-gutter);
+  }
+
+  .section-space {
+    padding-block: 56px;
+  }
+}
+
 .focus-ring {
   outline: 2px solid transparent;
   outline-offset: 4px;

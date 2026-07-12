@@ -11,7 +11,7 @@ export function SalonAtAGlance() {
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <section className="bg-[#FAF7FC] px-[clamp(24px,5vw,96px)] py-24 lg:py-32">
+    <section className="bg-[#FAF7FC] px-[var(--site-gutter)] py-14 md:px-[clamp(24px,5vw,96px)] md:py-24 lg:py-32">
       <div className="mx-auto max-w-[1440px]">
         <div className="grid gap-10 lg:grid-cols-[1fr_0.9fr] lg:items-end">
           <SectionHeading
@@ -44,7 +44,7 @@ export function SalonAtAGlance() {
             <p className="text-[12px] font-medium uppercase tracking-[0.18em] text-[var(--muted)]">Location</p>
             <div className="mt-5 flex items-end gap-3">
               <MapPin className="h-6 w-6 text-[var(--primary)]" aria-hidden="true" />
-              <span className="font-serif text-[56px] font-semibold leading-none text-[var(--primary)] sm:text-[64px] lg:text-[72px]">
+              <span className="font-serif text-[48px] font-semibold leading-none text-[var(--primary)] sm:text-[56px] lg:text-[72px]">
                 Dubai
               </span>
             </div>

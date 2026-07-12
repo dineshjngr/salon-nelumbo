@@ -43,49 +43,60 @@ export function HomeFooter() {
   const bannerScale = useTransform(scrollYProgress, [0.82, 1], shouldReduceMotion ? [1, 1] : [0.98, 1]);
 
   return (
-    <footer className="bg-[#FAF7FC] px-[clamp(24px,5vw,80px)] pb-[20px] pt-[48px] md:pb-[24px] md:pt-[64px] lg:pb-[28px] lg:pt-[80px]">
-      <SiteContainer>
-        <motion.div style={{ y: bannerY, scale: bannerScale }} className="relative overflow-hidden rounded-[26px] md:rounded-[34px]">
-          <FooterCTA />
-        </motion.div>
+    <footer className="bg-[#FAF7FC] px-0 pb-[20px] pt-[48px] md:px-[clamp(24px,5vw,80px)] md:pb-[24px] md:pt-[64px] lg:pb-[28px] lg:pt-[80px]">
+      <div className="hidden md:block">
+        <SiteContainer>
+          <motion.div style={{ y: bannerY, scale: bannerScale }} className="relative overflow-hidden rounded-[26px] md:rounded-[34px]">
+            <FooterCTA />
+          </motion.div>
 
-        <div className="mt-9 md:mt-11 lg:mt-14">
-          <FooterColumns />
-        </div>
+          <div className="mt-9 md:mt-11 lg:mt-14">
+            <FooterColumns />
+          </div>
 
-        <div className="mt-11 border-t border-[rgba(84,37,104,0.10)] pt-5 md:mt-12">
-          <div className="flex flex-col gap-3 text-[12px] text-[#736A76] md:flex-row md:items-center md:justify-between md:gap-5">
-            <p>© {year} Salon Nelumbo. All rights reserved.</p>
+          <div className="mt-11 border-t border-[rgba(84,37,104,0.10)] pt-5 md:mt-12">
+            <div className="flex flex-col gap-3 text-[12px] text-[#736A76] md:flex-row md:items-center md:justify-between md:gap-5">
+              <p>© {year} Salon Nelumbo. All rights reserved.</p>
 
-            <div className="flex flex-wrap items-center gap-4 md:gap-5">
-              <Link href="#" className="transition hover:text-[var(--primary)]">
-                Privacy Policy
-              </Link>
-              <Link href="#" className="transition hover:text-[var(--primary)]">
-                Terms of Service
-              </Link>
-              <a
-                href={salon.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="transition hover:text-[var(--primary)]"
-              >
-                Instagram
-              </a>
-              <button
-                type="button"
-                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                className="group inline-flex items-center gap-2 text-[var(--primary)] transition hover:-translate-y-0.5"
-              >
-                <span>Back to Top</span>
-                <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[rgba(84,37,104,0.16)] bg-white text-[var(--primary)] shadow-[0_8px_30px_rgba(84,37,104,0.08)] transition duration-[300ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-y-1 group-hover:border-[rgba(84,37,104,0.28)]">
-                  <ArrowUp aria-hidden="true" className="h-4 w-4" />
-                </span>
-              </button>
+              <div className="flex flex-wrap items-center gap-4 md:gap-5">
+                <Link href="#" className="transition hover:text-[var(--primary)]">
+                  Privacy Policy
+                </Link>
+                <Link href="#" className="transition hover:text-[var(--primary)]">
+                  Terms of Service
+                </Link>
+                <a
+                  href={salon.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition hover:text-[var(--primary)]"
+                >
+                  Instagram
+                </a>
+                <button
+                  type="button"
+                  onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                  className="group inline-flex items-center gap-2 text-[var(--primary)] transition hover:-translate-y-0.5"
+                >
+                  <span>Back to Top</span>
+                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[rgba(84,37,104,0.16)] bg-white text-[var(--primary)] shadow-[0_8px_30px_rgba(84,37,104,0.08)] transition duration-[300ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-y-1 group-hover:border-[rgba(84,37,104,0.28)]">
+                    <ArrowUp aria-hidden="true" className="h-4 w-4" />
+                  </span>
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      </SiteContainer>
+        </SiteContainer>
+      </div>
+
+      <div className="md:hidden">
+        <SiteContainer className="space-y-8">
+          <motion.div style={{ y: bannerY, scale: bannerScale }} className="relative overflow-hidden rounded-[26px]">
+            <FooterCTA />
+          </motion.div>
+          <MobileFooterContent year={year} />
+        </SiteContainer>
+      </div>
     </footer>
   );
 }
@@ -137,26 +148,26 @@ function FooterCTA() {
         }}
       />
 
-      <div className="relative z-10 flex min-h-[inherit] items-center justify-center px-6 py-12 text-center md:px-10 md:py-14 lg:px-12">
+      <div className="relative z-10 flex min-h-[inherit] items-center justify-center px-5 py-10 text-center md:px-10 md:py-14 lg:px-12">
         <div className="mx-auto max-w-[700px]">
           <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white/78">
             Your Next Appointment
           </p>
-          <h2 className="mt-5 font-serif text-[38px] font-semibold leading-[0.95] text-white sm:text-[48px] lg:text-[64px]">
+          <h2 className="mt-5 font-serif text-[34px] font-semibold leading-[0.95] text-white md:text-[48px] lg:text-[64px]">
             Make time for
             <br />
             yourself.
           </h2>
-          <p className="mx-auto mt-6 max-w-[560px] text-sm leading-7 text-white/84 sm:text-base sm:leading-8">
+          <p className="mx-auto mt-5 max-w-[560px] text-[15px] leading-7 text-white/84 sm:text-base sm:leading-8">
             Book your next hair, beauty, nail or relaxation service with Salon Nelumbo.
           </p>
 
-          <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <div className="mt-7 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <a
               href={salon.bookingWhatsapp}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex h-[52px] items-center justify-center rounded-full bg-[#FAF7FC] px-7 text-[13px] font-medium uppercase tracking-[0.08em] text-[var(--primary)] transition duration-[300ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-[3px] hover:bg-white hover:shadow-[0_18px_50px_rgba(255,255,255,0.22)]"
+              className="group inline-flex h-14 items-center justify-center rounded-full bg-[#FAF7FC] px-7 text-[13px] font-medium uppercase tracking-[0.08em] text-[var(--primary)] transition duration-[300ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-[3px] hover:bg-white hover:shadow-[0_18px_50px_rgba(255,255,255,0.22)]"
             >
               Book Appointment
               <ArrowRight aria-hidden="true" className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -259,6 +270,111 @@ function FooterColumns() {
           </li>
         </ul>
       </motion.div>
+    </div>
+  );
+}
+
+function MobileFooterContent({ year }: { year: number }) {
+  return (
+    <div className="space-y-8 text-left">
+      <motion.div
+        initial={{ opacity: 0, y: 18 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.55, ease: easeOut }}
+        className="max-w-none"
+      >
+        <Link href="/" className="font-serif text-[28px] font-semibold leading-none text-[var(--primary)]">
+          Salon Nelumbo
+        </Link>
+        <p className="mt-4 max-w-sm text-[15px] leading-7 text-[#736A76]">
+          Hair, beauty, nail and relaxation services in Dubai.
+        </p>
+        <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-[14px] text-[#736A76]">
+          <a href={salon.phoneHref} className="inline-flex items-center gap-2 whitespace-nowrap transition hover:text-[var(--primary)]">
+            <Phone className="h-4 w-4" />
+            {salon.phoneDisplay}
+          </a>
+          <span aria-hidden="true">•</span>
+          <span>{salon.location}</span>
+        </div>
+        <div className="mt-6 flex items-center gap-3">
+          <SocialButton href={salon.instagram} label="Instagram">
+            <Camera className="h-4 w-4" />
+          </SocialButton>
+          <SocialButton href={salon.whatsapp} label="WhatsApp">
+            <MessageCircle className="h-4 w-4" />
+          </SocialButton>
+          <SocialButton href={salon.mapsUrl} label="Google Maps">
+            <MapPin className="h-4 w-4" />
+          </SocialButton>
+        </div>
+      </motion.div>
+
+      <div className="space-y-8">
+        <FooterLinkColumn title="Company" items={companyLinks} className="w-full" delay={0.04} />
+        <FooterLinkColumn title="Services" items={footerServices.slice(0, 7)} className="w-full" delay={0.08} footerLink />
+
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.55, ease: easeOut }}
+          className="space-y-4"
+        >
+          <h3 className="text-[13px] font-medium uppercase tracking-[0.2em] leading-none text-[var(--primary)]">
+            Visit
+          </h3>
+          <ul className="flex flex-col gap-4 text-[14px] leading-[1.5] text-[#736A76]">
+            <li>Dubai, UAE</li>
+            <li>
+              <a href={salon.phoneHref} className="transition hover:text-[var(--primary)]">
+                050 120 1938
+              </a>
+            </li>
+            <li>
+              <a href={salon.mapsUrl} target="_blank" rel="noopener noreferrer" className="transition hover:text-[var(--primary)]">
+                Get Directions
+              </a>
+            </li>
+            <li>
+              <a href={salon.bookingWhatsapp} target="_blank" rel="noopener noreferrer" className="transition hover:text-[var(--primary)]">
+                Book Appointment
+              </a>
+            </li>
+            <li className="max-w-[220px] text-[13px] leading-[1.6] text-[#736A76]">
+              Contact the salon to confirm availability.
+            </li>
+          </ul>
+        </motion.div>
+      </div>
+
+      <div className="border-t border-[rgba(84,37,104,0.10)] pt-5">
+        <div className="flex flex-col gap-3 text-[12px] text-[#736A76]">
+          <p>© {year} Salon Nelumbo. All rights reserved.</p>
+          <div className="flex flex-wrap items-center gap-4">
+            <Link href="#" className="transition hover:text-[var(--primary)]">
+              Privacy Policy
+            </Link>
+            <Link href="#" className="transition hover:text-[var(--primary)]">
+              Terms of Service
+            </Link>
+            <a href={salon.instagram} target="_blank" rel="noopener noreferrer" className="transition hover:text-[var(--primary)]">
+              Instagram
+            </a>
+            <button
+              type="button"
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              className="group inline-flex items-center gap-2 text-[var(--primary)] transition hover:-translate-y-0.5"
+            >
+              <span>Back to Top</span>
+              <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[rgba(84,37,104,0.16)] bg-white text-[var(--primary)] shadow-[0_8px_30px_rgba(84,37,104,0.08)] transition duration-[300ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-y-1 group-hover:border-[rgba(84,37,104,0.28)]">
+                <ArrowUp aria-hidden="true" className="h-4 w-4" />
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

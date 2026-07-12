@@ -71,7 +71,7 @@ export default function ServicesPage() {
           imageAlt="Salon hair station and styling tools"
         />
 
-        <section className="sticky top-[96px] z-30 border-y border-[var(--border)] bg-[#FAF7FC]/82 py-4 backdrop-blur-md">
+        <section className="sticky top-[72px] z-30 border-y border-[var(--border)] bg-[#FAF7FC]/82 py-4 backdrop-blur-md md:top-[96px]">
           <SiteContainer>
             <nav aria-label="Service categories" className="flex gap-3 overflow-x-auto">
               {groups.map((group) => (
@@ -95,7 +95,7 @@ export default function ServicesPage() {
                 title={<>Choose the care<br /><span className="italic text-[#9B72B3]">that fits your day.</span></>}
                 description="Individual service pricing is confirmed by the salon. Contact the team for current availability and details."
               />
-              <div className="rounded-[26px] border border-[var(--border)] bg-[#F8F3FC] p-6 shadow-[var(--shadow-sm)]">
+              <div className="rounded-[26px] border border-[var(--border)] bg-[#F8F3FC] p-5 shadow-[var(--shadow-sm)] md:p-6">
                 <label className="block text-sm font-medium text-[var(--text)]">
                   Search services
                   <input type="search" placeholder="Search Manicure, Facial, Waxing..." value={query} onChange={(event) => setQuery(event.target.value)} className="mt-3 min-h-12 w-full rounded-2xl border border-[var(--border)] bg-white px-4 text-[var(--text)] outline-none transition focus:border-[var(--primary)] focus:ring-2 focus:ring-[#542568]/20" />
@@ -108,18 +108,18 @@ export default function ServicesPage() {
                   <article
                     id={group.id}
                     key={group.id}
-                    className="scroll-mt-40 rounded-[30px] border border-[var(--border)] bg-white/72 p-7 shadow-[var(--shadow-sm)] transition duration-300 hover:-translate-y-1 hover:border-[#542568]/30 hover:shadow-[var(--shadow-md)]"
+                    className="scroll-mt-40 rounded-[30px] border border-[var(--border)] bg-white/72 p-6 shadow-[var(--shadow-sm)] transition duration-300 hover:-translate-y-1 hover:border-[#542568]/30 hover:shadow-[var(--shadow-md)] md:p-7"
                   >
                     <div className="flex items-start justify-between gap-4">
                       <div>
                         <p className="text-xs font-medium uppercase tracking-[0.14em] text-[var(--muted)]">Contact for pricing</p>
-                        <h2 className="mt-3 font-serif text-4xl font-semibold text-[var(--text)]">{group.title}</h2>
+                        <h2 className="mt-3 font-serif text-[28px] font-semibold text-[var(--text)] md:text-4xl">{group.title}</h2>
                       </div>
                       <span className="grid h-12 w-12 place-items-center rounded-full bg-[#EEE4F2] text-[var(--primary)]">
                         <Sparkles aria-hidden="true" className="h-5 w-5" />
                       </span>
                     </div>
-                    <p className="mt-4 text-sm leading-7 text-[var(--muted)]">{group.description}</p>
+                    <p className="mt-4 text-[14px] leading-7 text-[var(--muted)] md:text-sm">{group.description}</p>
                     <ul className="mt-7 grid gap-3 sm:grid-cols-2">
                       {group.items.map((item) => (
                         <li key={item} className="flex gap-3 text-sm text-[var(--muted)]">
@@ -154,17 +154,17 @@ export default function ServicesPage() {
             </div>
             <div className="mt-14 grid gap-5 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
               {packages.map((salonPackage) => (
-                <article key={salonPackage.id} className="rounded-[28px] border border-[var(--border)] bg-[#FAF7FC] p-6 shadow-[var(--shadow-sm)]">
+                <article key={salonPackage.id} className="rounded-[28px] border border-[var(--border)] bg-[#FAF7FC] p-5 shadow-[var(--shadow-sm)] md:p-6">
                   <div className="flex items-start justify-between gap-4">
                     <div>
                       <p className="text-xs font-medium uppercase tracking-[0.14em] text-[var(--muted)]">Package {String(salonPackage.id).padStart(2, "0")}</p>
-                      <h3 className="mt-2 font-serif text-3xl font-semibold text-[var(--text)]">{salonPackage.title}</h3>
+                      <h3 className="mt-2 font-serif text-[26px] font-semibold text-[var(--text)] md:text-3xl">{salonPackage.title}</h3>
                     </div>
-                    <p className="font-serif text-3xl font-semibold text-[var(--primary)]">99</p>
+                    <p className="font-serif text-[28px] font-semibold text-[var(--primary)] md:text-3xl">99</p>
                   </div>
                   <ul className="mt-6 space-y-3">
                     {salonPackage.items.map((item) => (
-                      <li key={item} className="flex gap-3 text-sm leading-6 text-[var(--muted)]">
+                        <li key={item} className="flex gap-3 text-[14px] leading-6 text-[var(--muted)] md:text-sm">
                         <Check aria-hidden="true" className="mt-1 h-4 w-4 shrink-0 text-[#A678B6]" />
                         {item}
                       </li>
@@ -174,7 +174,7 @@ export default function ServicesPage() {
                     href={packageBookingUrl(salonPackage.id)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group mt-7 inline-flex min-h-12 items-center justify-center rounded-full bg-[var(--primary)] px-5 text-sm font-medium text-white transition hover:bg-[var(--primary-dark)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--primary)]"
+                  className="group mt-7 inline-flex min-h-14 items-center justify-center rounded-full bg-[var(--primary)] px-5 text-sm font-medium text-white transition hover:bg-[var(--primary-dark)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--primary)]"
                   >
                     Book Package
                     <ArrowUpRight aria-hidden="true" className="ml-2 h-4 w-4 transition group-hover:rotate-45" />

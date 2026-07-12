@@ -10,7 +10,7 @@ export function HomeFAQ() {
   const [active, setActive] = useState(0);
 
   return (
-    <section id="faq" className="relative overflow-hidden bg-[#FAF7FC] px-[clamp(24px,5vw,96px)] py-24 lg:py-32">
+    <section id="faq" className="relative overflow-hidden bg-[#FAF7FC] px-[var(--site-gutter)] py-14 md:px-[clamp(24px,5vw,96px)] md:py-24 lg:py-32">
       <div className="absolute right-[10%] top-40 h-72 w-72 rounded-full bg-[#EDE3F2]/80 blur-3xl" aria-hidden="true" />
       <div className="relative mx-auto grid max-w-[1440px] gap-12 lg:grid-cols-[0.8fr_1.2fr]">
         <SectionHeading
@@ -27,10 +27,12 @@ export function HomeFAQ() {
                   type="button"
                   aria-expanded={isActive}
                   onClick={() => setActive(isActive ? -1 : index)}
-                  className="relative flex w-full items-center gap-5 p-6 text-left outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)]"
+                  className="relative flex w-full items-start gap-4 p-5 text-left outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)] md:items-center md:gap-5 md:p-6"
                 >
-                  <span className="font-serif text-3xl font-semibold text-[var(--primary)]">{String(index + 1).padStart(2, "0")}</span>
-                  <span className="font-serif text-2xl font-semibold text-[var(--text)]">{item.question}</span>
+                  <span className="font-serif text-[28px] font-semibold text-[var(--primary)] md:text-3xl">{String(index + 1).padStart(2, "0")}</span>
+                  <span className="font-serif text-[20px] font-semibold leading-[1.1] text-[var(--text)] md:text-2xl">
+                    {item.question}
+                  </span>
                   <Plus aria-hidden="true" className={`ml-auto h-5 w-5 shrink-0 text-[var(--primary)] transition ${isActive ? "rotate-45" : ""}`} />
                 </button>
                 <AnimatePresence initial={false}>
@@ -42,7 +44,7 @@ export function HomeFAQ() {
                       transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                       className="overflow-hidden"
                     >
-                      <p className="px-6 pb-6 pl-[88px] text-sm leading-7 text-[var(--muted)]">{item.answer}</p>
+                      <p className="px-5 pb-5 text-[14px] leading-7 text-[var(--muted)] md:px-6 md:pb-6 md:pl-[88px]">{item.answer}</p>
                     </motion.div>
                   ) : null}
                 </AnimatePresence>

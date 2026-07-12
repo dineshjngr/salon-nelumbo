@@ -23,7 +23,7 @@ export function WhyChooseUs() {
   const yFloat = useTransform(scrollYProgress, [0, 1], shouldReduceMotion ? [0, 0] : [24, -24]);
 
   return (
-    <section id="why-us" className="overflow-hidden bg-white px-[clamp(24px,5vw,96px)] py-24 lg:py-32">
+    <section id="why-us" className="overflow-hidden bg-white px-[var(--site-gutter)] py-14 md:px-[clamp(24px,5vw,96px)] md:py-24 lg:py-32">
       <div className="mx-auto grid max-w-[1440px] gap-14 lg:grid-cols-[1fr_0.95fr] lg:items-center">
         <div className="relative">
           <motion.div style={{ y: yMain }}>
@@ -50,8 +50,8 @@ export function WhyChooseUs() {
                 <span className="absolute left-0 top-0 h-px w-0 bg-[var(--primary)] transition-all duration-500 group-hover:w-full" />
                 <span className="font-serif text-3xl font-semibold text-[var(--primary)]/35 transition group-hover:text-[var(--primary)]">{String(index + 1).padStart(2, "0")}</span>
                 <span className="transition duration-300 group-hover:translate-x-2">
-                  <span className="block font-serif text-3xl font-semibold text-[var(--text)]">{title}</span>
-                  <span className="mt-1 block text-sm leading-6 text-[var(--muted)]">{description}</span>
+                  <span className="block font-serif text-[26px] font-semibold text-[var(--text)] md:text-3xl">{title}</span>
+                  <span className="mt-1 block text-[13px] leading-6 text-[var(--muted)] md:text-sm">{description}</span>
                 </span>
                 <ArrowUpRight aria-hidden="true" className="ml-auto h-5 w-5 text-[var(--primary)] transition group-hover:rotate-45" />
               </button>

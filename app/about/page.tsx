@@ -52,7 +52,7 @@ export default function AboutPage() {
                   label="Salon Story"
                   title={<>A softer rhythm<br /><span className="italic text-[#9B72B3]">for self-care.</span></>}
                 />
-                <p className="mt-7 max-w-2xl text-base leading-8 text-[var(--muted)]">
+                <p className="mt-7 max-w-2xl text-[15px] leading-7 text-[var(--muted)] md:text-base md:leading-8">
                   The salon brings together everyday grooming and restorative beauty rituals in a setting that feels composed, clean and personal. Each visit is shaped around comfort, care and a polished finish.
                 </p>
               </div>
@@ -63,8 +63,8 @@ export default function AboutPage() {
                   sizes="(min-width:1024px) 52vw, 100vw"
                   className="aspect-[4/5] rounded-[34px]"
                 />
-                <div className="absolute -bottom-8 left-8 max-w-xs rounded-[26px] border border-white/55 bg-white/70 p-6 shadow-[var(--shadow-md)] backdrop-blur-[18px]">
-                  <p className="font-serif text-3xl font-semibold text-[var(--primary)]">Hair, beauty, nails and relaxation</p>
+                <div className="absolute -bottom-8 left-8 max-w-xs rounded-[26px] border border-white/55 bg-white/70 p-5 shadow-[var(--shadow-md)] backdrop-blur-[18px] md:p-6">
+                  <p className="font-serif text-[26px] font-semibold text-[var(--primary)] md:text-3xl">Hair, beauty, nails and relaxation</p>
                   <p className="mt-3 text-sm leading-7 text-[var(--muted)]">A considered menu for regular beauty care.</p>
                 </div>
               </div>
@@ -83,10 +83,10 @@ export default function AboutPage() {
               {values.map((value) => {
                 const Icon = value.icon;
                 return (
-                  <article key={value.title} className="group rounded-[30px] border border-[var(--border)] bg-[#FAF7FC] p-7 shadow-[var(--shadow-sm)] transition hover:-translate-y-1 hover:border-[#542568]/30 hover:shadow-[var(--shadow-md)]">
+                  <article key={value.title} className="group rounded-[30px] border border-[var(--border)] bg-[#FAF7FC] p-6 shadow-[var(--shadow-sm)] transition hover:-translate-y-1 hover:border-[#542568]/30 hover:shadow-[var(--shadow-md)] md:p-7">
                     <Icon aria-hidden="true" className="h-7 w-7 text-[#A678B6]" />
-                    <h2 className="mt-6 font-serif text-3xl font-semibold text-[var(--text)]">{value.title}</h2>
-                    <p className="mt-4 text-sm leading-7 text-[var(--muted)]">{value.text}</p>
+                    <h2 className="mt-6 font-serif text-[26px] font-semibold text-[var(--text)] md:text-3xl">{value.title}</h2>
+                    <p className="mt-4 text-[14px] leading-7 text-[var(--muted)] md:text-sm">{value.text}</p>
                   </article>
                 );
               })}

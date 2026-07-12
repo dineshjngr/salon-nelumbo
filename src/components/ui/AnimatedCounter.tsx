@@ -58,10 +58,10 @@ export function AnimatedCounter({
       whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.75, ease: easeOut }}
-      className="group rounded-[28px] border border-[var(--border)] bg-white/66 p-7 shadow-[0_18px_60px_rgba(84,37,104,0.10)] backdrop-blur-[18px] transition duration-500 hover:-translate-y-1 hover:border-[rgba(84,37,104,0.28)] hover:shadow-[0_24px_65px_rgba(84,37,104,0.14)]"
+      className="group rounded-[28px] border border-[var(--border)] bg-white/66 p-6 shadow-[0_18px_60px_rgba(84,37,104,0.10)] backdrop-blur-[18px] transition duration-500 hover:-translate-y-1 hover:border-[rgba(84,37,104,0.28)] hover:shadow-[0_24px_65px_rgba(84,37,104,0.14)] md:p-7"
     >
       <p className="text-[12px] font-medium uppercase tracking-[0.18em] text-[var(--muted)]">{label}</p>
-      <div className="mt-5 font-serif text-[56px] font-semibold leading-none text-[var(--primary)] sm:text-[64px] lg:text-[72px]">
+      <div className="mt-5 font-serif text-[48px] font-semibold leading-none text-[var(--primary)] sm:text-[56px] lg:text-[72px]">
         {current}
         {suffix}
       </div>

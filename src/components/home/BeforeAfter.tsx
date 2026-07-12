@@ -18,7 +18,7 @@ export function BeforeAfter() {
   const item = comparisons[active];
 
   return (
-    <section id="before-after" className="relative overflow-hidden bg-[#FAF7FC] px-[clamp(24px,5vw,96px)] py-24 lg:py-32">
+    <section id="before-after" className="relative overflow-hidden bg-[#FAF7FC] px-[var(--site-gutter)] py-14 md:px-[clamp(24px,5vw,96px)] md:py-24 lg:py-32">
       <div className="absolute left-[8%] top-32 h-72 w-72 rounded-full bg-[#EDE3F2]/75 blur-3xl" aria-hidden="true" />
       <div className="relative mx-auto grid max-w-[1440px] gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
         <div>

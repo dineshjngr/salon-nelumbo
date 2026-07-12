@@ -74,8 +74,8 @@ export default function ContactPage() {
                 <OpeningStatus className="mt-6 w-full" />
               </div>
 
-              <form onSubmit={onSubmit} noValidate className="rounded-[34px] border border-[var(--border)] bg-white/76 p-6 shadow-[var(--shadow-md)] md:p-8">
-                <h2 className="font-serif text-4xl font-semibold text-[var(--text)]">Appointment request</h2>
+              <form onSubmit={onSubmit} noValidate className="rounded-[34px] border border-[var(--border)] bg-white/76 p-5 shadow-[var(--shadow-md)] md:p-8">
+                <h2 className="font-serif text-[30px] font-semibold text-[var(--text)] md:text-4xl">Appointment request</h2>
                 <p className="mt-3 text-sm leading-7 text-[var(--muted)]">This form prepares your details locally. A salon backend can be connected later.</p>
                 <div className="mt-8 grid gap-5 md:grid-cols-2">
                   <Field label="Name" name="name" required />
@@ -102,7 +102,7 @@ export default function ContactPage() {
                     Your details are ready. Please call or WhatsApp the salon to confirm availability.
                   </p>
                 ) : null}
-                <button type="submit" className="mt-8 min-h-12 rounded-full bg-[var(--primary)] px-8 text-sm font-medium uppercase tracking-[0.08em] text-white transition hover:bg-[var(--primary-dark)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--primary)]">
+                <button type="submit" className="mt-8 min-h-14 rounded-full bg-[var(--primary)] px-8 text-sm font-medium uppercase tracking-[0.08em] text-white transition hover:bg-[var(--primary-dark)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--primary)]">
                   Prepare Request
                 </button>
               </form>
@@ -114,9 +114,9 @@ export default function ContactPage() {
           <SiteContainer>
             <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
               <div>
-                <div className="rounded-[34px] border border-[var(--border)] bg-[#FAF7FC] p-8 shadow-[var(--shadow-md)]">
+                <div className="rounded-[34px] border border-[var(--border)] bg-[#FAF7FC] p-6 shadow-[var(--shadow-md)] md:p-8">
                   <p className="text-xs font-medium uppercase tracking-[0.18em] text-[var(--primary)]">Salon Location</p>
-                  <h2 className="mt-5 font-serif text-5xl font-semibold text-[var(--text)]">Dubai, United Arab Emirates</h2>
+                  <h2 className="mt-5 font-serif text-[32px] font-semibold text-[var(--text)] md:text-5xl">Dubai, United Arab Emirates</h2>
                   <p className="mt-5 text-sm leading-7 text-[var(--muted)]">Salon Nelumbo is located in Al Nahda, Dubai, offering a peaceful and luxurious environment for beauty appointments.</p>
                   <div className="mt-8 flex flex-col gap-4 sm:flex-row">
                     <a
@@ -149,7 +149,7 @@ export default function ContactPage() {
                 <iframe
                   src="https://www.google.com/maps?q=Salon%20Nelumbo%20Dubai&output=embed"
                   title="Salon Nelumbo map"
-                  className="h-[500px] w-full border-0"
+                  className="h-[380px] w-full border-0 md:h-[500px]"
                   loading="lazy"
                 />
               </div>

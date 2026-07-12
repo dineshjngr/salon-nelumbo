@@ -134,7 +134,7 @@ export function Header() {
                       <Link
                         href={item.href}
                         onClick={() => setIsOpen(false)}
-                        className="block rounded-2xl px-2 py-2 font-serif text-4xl font-semibold text-[var(--text)] transition hover:text-[var(--primary)]"
+                        className="block rounded-2xl px-2 py-2 font-serif text-[34px] font-semibold text-[var(--text)] transition hover:text-[var(--primary)] md:text-4xl"
                       >
                         {item.label}
                       </Link>

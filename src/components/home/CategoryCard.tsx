@@ -49,23 +49,23 @@ export function CategoryCard({ category, index }: CategoryCardProps) {
           className="object-cover transition duration-[650ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-y-2 group-hover:scale-[1.07]"
         />
         <div className="absolute inset-x-0 bottom-0 h-[58%] bg-gradient-to-t from-[#160d1d]/90 via-[#160d1d]/42 to-transparent transition-opacity duration-[550ms] group-hover:opacity-95" />
-        <div className="absolute right-6 top-6 font-serif text-[64px] font-semibold leading-none text-white/25 transition duration-[550ms] group-hover:text-white/45 md:right-8 md:top-8">
+        <div className="absolute right-5 top-5 font-serif text-[54px] font-semibold leading-none text-white/25 transition duration-[550ms] group-hover:text-white/45 sm:right-6 sm:top-6 sm:text-[60px] md:right-8 md:top-8 md:text-[64px]">
           {category.number}
         </div>
-        <div className="relative z-10 mt-auto flex w-full items-end justify-between gap-6 p-6 md:p-8">
+        <div className="relative z-10 mt-auto flex w-full items-end justify-between gap-5 p-5 sm:p-6 md:p-8">
           <div className={`${category.contentWidthClassName} text-white`}>
-            <p className="mb-3 text-[11px] font-medium uppercase tracking-[0.14em] text-white/72">
+            <p className="mb-3 text-[10px] font-medium uppercase tracking-[0.14em] text-white/72 sm:text-[11px]">
               {category.label}
             </p>
-            <h3 className="font-serif text-[40px] font-semibold leading-none transition-transform duration-[550ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-y-[10px] md:text-[48px]">
+            <h3 className="font-serif text-[32px] font-semibold leading-none transition-transform duration-[550ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-y-[10px] md:text-[48px]">
               {category.name}
             </h3>
-            <p className="mt-4 max-w-[330px] text-sm leading-6 text-white/82 transition duration-[550ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-safe:lg:translate-y-2 motion-safe:lg:opacity-85 group-hover:-translate-y-[10px] group-hover:text-white group-hover:opacity-100 md:text-[15px]">
+            <p className="mt-4 max-w-[330px] text-[13px] leading-6 text-white/82 transition duration-[550ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-safe:lg:translate-y-2 motion-safe:lg:opacity-85 group-hover:-translate-y-[10px] group-hover:text-white group-hover:opacity-100 sm:text-sm md:text-[15px]">
               {category.description}
             </p>
           </div>
-          <span className="mb-1 inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-white/45 text-white transition duration-[550ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:rotate-45 group-hover:bg-white group-hover:text-[#542568]">
-            <ArrowUpRight aria-hidden="true" className="h-5 w-5" />
+          <span className="mb-1 inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/45 text-white transition duration-[550ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:rotate-45 group-hover:bg-white group-hover:text-[#542568] sm:h-12 sm:w-12">
+            <ArrowUpRight aria-hidden="true" className="h-4 w-4 sm:h-5 sm:w-5" />
           </span>
         </div>
       </Link>

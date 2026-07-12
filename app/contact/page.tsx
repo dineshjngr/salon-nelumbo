@@ -129,13 +129,13 @@ export default function ContactPage() {
           <SiteContainer>
             <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
               <div>
-              <motion.div
-                initial={{ opacity: 0, y: 18 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-                className="rounded-[34px] border border-[var(--border)] bg-[#FAF7FC] p-6 shadow-[var(--shadow-md)] md:p-8"
-              >
+                <motion.div
+                  initial={{ opacity: 0, y: 18 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                  className="rounded-[34px] border border-[var(--border)] bg-[#FAF7FC] p-6 shadow-[var(--shadow-md)] md:p-8"
+                >
                   <p className="text-xs font-medium uppercase tracking-[0.18em] text-[var(--primary)]">Salon Location</p>
                   <h2 className="mt-5 font-serif text-[32px] font-semibold text-[var(--text)] md:text-5xl">Al Nahda 1, Dubai, UAE</h2>
                   <p className="mt-5 text-sm leading-7 text-[var(--muted)]">Salon Nelumbo is located in Al Nahda, Dubai, offering a peaceful and luxurious environment for beauty appointments.</p>
@@ -157,15 +157,21 @@ export default function ContactPage() {
                       WhatsApp
                     </a>
                   </div>
-                </div>
-                <div className="mt-8 rounded-[34px] border border-[var(--border)] bg-[#F8F3FC] p-8 shadow-[var(--shadow-sm)]">
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, y: 18 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                  className="mt-8 rounded-[34px] border border-[var(--border)] bg-[#F8F3FC] p-8 shadow-[var(--shadow-sm)]"
+                >
                   <SectionHeading
                     label="Location Details"
                     title={<>Find us in Dubai<br /><span className="italic text-[#9B72B3]">and arrive relaxed.</span></>}
                     description="Tap to open the salon location in Google Maps so you can plan your visit with ease."
                   />
-                </div>
-              </motion.div>
+                </motion.div>
+              </div>
               <motion.div
                 initial={{ opacity: 0, y: 18 }}
                 whileInView={{ opacity: 1, y: 0 }}

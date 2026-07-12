@@ -1,22 +1,75 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
-import { useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
+import { useReducedMotion } from "motion/react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { experienceSteps } from "@/src/data/experience";
 import { GlassPanel } from "@/src/components/ui/GlassPanel";
 import { SectionHeading } from "@/src/components/ui/SectionHeading";
 
+gsap.registerPlugin(ScrollTrigger);
+
 export function SalonExperience() {
   const ref = useRef<HTMLElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
   const shouldReduceMotion = useReducedMotion();
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
-  const x = useTransform(scrollYProgress, [0.08, 0.92], ["0%", "-48%"]);
-  const progress = useTransform(scrollYProgress, [0.08, 0.92], ["0%", "100%"]);
+
+  useLayoutEffect(() => {
+    if (shouldReduceMotion) {
+      return;
+    }
+
+    const section = ref.current;
+    const track = trackRef.current;
+    if (!section || !track) {
+      return;
+    }
+
+    const ctx = gsap.context(() => {
+      const travel = () => Math.max(0, track.scrollWidth - window.innerWidth);
+      const progressBar = section.querySelector<HTMLElement>("[data-progress]");
+
+      gsap.to(track, {
+        x: () => -travel(),
+        ease: "none",
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: () => `+=${travel()}`,
+          scrub: 1,
+          pin: true,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+        },
+      });
+
+      if (progressBar) {
+        gsap.fromTo(
+          progressBar,
+          { scaleX: 0 },
+          {
+            scaleX: 1,
+            ease: "none",
+            scrollTrigger: {
+              trigger: section,
+              start: "top top",
+              end: () => `+=${travel()}`,
+              scrub: 1,
+              invalidateOnRefresh: true,
+            },
+          }
+        );
+      }
+    }, section);
+
+    return () => ctx.revert();
+  }, [shouldReduceMotion]);
 
   return (
-    <section id="salon-experience" ref={ref} className="relative bg-[#F4EDF8] lg:h-[260vh]">
-      <div className="sticky top-0 hidden h-screen overflow-hidden px-16 py-24 lg:block">
+    <section id="salon-experience" ref={ref} className="relative bg-[#F4EDF8] lg:min-h-screen">
+      <div className="hidden overflow-hidden px-16 py-24 lg:block">
         <div className="mx-auto flex h-full max-w-[1440px] items-center gap-16">
           <div className="w-[36%] shrink-0">
             <SectionHeading
@@ -26,10 +79,10 @@ export function SalonExperience() {
             />
             <p className="mt-12 text-xs font-medium uppercase tracking-[0.18em] text-[var(--primary)]">Scroll to explore</p>
             <div className="mt-5 h-px w-full bg-[#542568]/15">
-              <motion.div className="h-px bg-[var(--primary)]" style={{ width: progress }} />
+              <div data-progress className="h-px origin-left scale-x-0 bg-[var(--primary)]" />
             </div>
           </div>
-          <motion.div className="flex gap-6" style={{ x: shouldReduceMotion ? "0%" : x }}>
+          <div ref={trackRef} className="flex gap-6 will-change-transform">
             {experienceSteps.map((step) => {
               const Icon = step.icon;
               return (
@@ -45,7 +98,7 @@ export function SalonExperience() {
                 </article>
               );
             })}
-          </motion.div>
+          </div>
         </div>
       </div>
 

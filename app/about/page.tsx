@@ -1,3 +1,5 @@
+"use client";
+
 import { Heart, ShieldCheck, Sparkles, Star } from "lucide-react";
 import { motion } from "motion/react";
 import { Header } from "@/src/components/layout/Header";

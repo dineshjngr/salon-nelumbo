@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import {
   ArrowRight,
   ArrowUp,
@@ -60,12 +60,12 @@ export function HomeFooter() {
               <p>© {year} Salon Nelumbo. All rights reserved.</p>
 
               <div className="flex flex-wrap items-center gap-4 md:gap-5">
-                <Link href="#" className="transition hover:text-[var(--primary)]">
+                <span>
                   Privacy Policy
-                </Link>
-                <Link href="#" className="transition hover:text-[var(--primary)]">
+                </span>
+                <span>
                   Terms of Service
-                </Link>
+                </span>
                 <a
                   href={salon.instagram}
                   target="_blank"
@@ -354,12 +354,12 @@ function MobileFooterContent({ year }: { year: number }) {
         <div className="flex flex-col gap-3 text-[12px] text-[#736A76]">
           <p>© {year} Salon Nelumbo. All rights reserved.</p>
           <div className="flex flex-wrap items-center gap-4">
-            <Link href="#" className="transition hover:text-[var(--primary)]">
+            <span>
               Privacy Policy
-            </Link>
-            <Link href="#" className="transition hover:text-[var(--primary)]">
+            </span>
+            <span>
               Terms of Service
-            </Link>
+            </span>
             <a href={salon.instagram} target="_blank" rel="noopener noreferrer" className="transition hover:text-[var(--primary)]">
               Instagram
             </a>

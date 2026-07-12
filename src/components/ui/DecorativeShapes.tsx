@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "motion/react";
 import { getOpeningStatus, type OpeningStatus as OpeningStatusValue } from "@/src/lib/opening-hours";
 
 type OpeningStatusProps = {

@@ -15,7 +15,7 @@ export const salon = {
   whatsapp: "https://wa.me/971501201938",
   bookingWhatsapp:
     "https://wa.me/971501201938?text=Hello%20Salon%20Nelumbo%2C%20I%20would%20like%20to%20book%20an%20appointment.",
-  location: "Dubai, United Arab Emirates",
+  location: "Al Nahda 1, Dubai, United Arab Emirates",
   mapsUrl: "https://maps.app.goo.gl/MMfNtLRVAvomaKdd9",
   hours: "Contact salon to confirm",
   instagram: "https://www.instagram.com/nelumboalnahda/",

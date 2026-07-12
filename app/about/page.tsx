@@ -1,4 +1,5 @@
 import { Heart, ShieldCheck, Sparkles, Star } from "lucide-react";
+import { motion } from "motion/react";
 import { Header } from "@/src/components/layout/Header";
 import { Footer } from "@/src/components/layout/Footer";
 import { PageHero } from "@/src/components/layout/PageHero";
@@ -79,18 +80,31 @@ export default function AboutPage() {
               title={<>Care that feels<br /><span className="italic text-[#9B72B3]">thoughtful.</span></>}
               align="center"
             />
-            <div className="mt-14 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.16 }}
+              variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.08 } } }}
+              className="mt-14 grid gap-6 md:grid-cols-2 xl:grid-cols-4"
+            >
               {values.map((value) => {
                 const Icon = value.icon;
                 return (
-                  <article key={value.title} className="group rounded-[30px] border border-[var(--border)] bg-[#FAF7FC] p-6 shadow-[var(--shadow-sm)] transition hover:-translate-y-1 hover:border-[#542568]/30 hover:shadow-[var(--shadow-md)] md:p-7">
+                  <motion.article
+                    key={value.title}
+                    variants={{
+                      hidden: { opacity: 0, y: 24, filter: "blur(8px)" },
+                      visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] } },
+                    }}
+                    className="group rounded-[30px] border border-[var(--border)] bg-[#FAF7FC] p-6 shadow-[var(--shadow-sm)] transition hover:-translate-y-1 hover:border-[#542568]/30 hover:shadow-[var(--shadow-md)] md:p-7"
+                  >
                     <Icon aria-hidden="true" className="h-7 w-7 text-[#A678B6]" />
                     <h2 className="mt-6 font-serif text-[26px] font-semibold text-[var(--text)] md:text-3xl">{value.title}</h2>
                     <p className="mt-4 text-[14px] leading-7 text-[var(--muted)] md:text-sm">{value.text}</p>
-                  </article>
+                  </motion.article>
                 );
               })}
-            </div>
+            </motion.div>
           </SiteContainer>
         </section>
 

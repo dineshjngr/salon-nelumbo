@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import type { MutableRefObject } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { Calendar, MapPin, MessageCircle, Phone } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { salon } from "@/src/data/site-data";

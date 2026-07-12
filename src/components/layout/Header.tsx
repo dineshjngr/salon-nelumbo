@@ -2,17 +2,38 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { ArrowRight, Menu, X } from "lucide-react";
 import { navigation, salon } from "@/src/data/site-data";
 import { SiteContainer } from "@/src/components/ui/SiteContainer";
 import { SalonLogo } from "@/src/components/ui/SalonLogo";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
+const menuVariants = {
+  hidden: { opacity: 0, y: -8, scale: 0.985 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.32,
+      ease: easeOut,
+      staggerChildren: 0.05,
+      delayChildren: 0.06,
+    },
+  },
+  exit: { opacity: 0, y: -10, scale: 0.985, transition: { duration: 0.2, ease: easeOut } },
+};
+
+const menuItemVariants = {
+  hidden: { opacity: 0, y: 10 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.28, ease: easeOut } },
+};
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 50);
@@ -32,7 +53,7 @@ export function Header() {
     <>
       <motion.header
         initial={{ opacity: 0, y: -16 }}
-        animate={{ opacity: 1, y: 0 }}
+        animate={{ opacity: 1, y: 0, scale: isScrolled ? 0.995 : 1 }}
         transition={{ duration: 0.55, ease: easeOut }}
         className={`fixed inset-x-0 z-50 transition-[top] duration-[350ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
           isScrolled ? "top-2 md:top-2.5" : "top-3 md:top-3.5"
@@ -110,15 +131,16 @@ export function Header() {
             className="fixed inset-0 z-[70] bg-[#271D2C]/28 p-4 backdrop-blur-md lg:hidden"
           >
             <motion.div
-              initial={{ y: -18, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -18, opacity: 0 }}
-              transition={{ duration: 0.35, ease: easeOut }}
+              variants={menuVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
               className="flex max-h-[calc(100vh-2rem)] flex-col overflow-y-auto rounded-[34px] border border-white/60 bg-[#FAF7FC] p-6 shadow-[0_28px_80px_rgba(84,37,104,0.16)]"
             >
               <div className="flex items-center justify-between">
                 <Link
                   href="/"
+                  aria-label="Salon Nelumbo home"
                   onClick={() => setIsOpen(false)}
                   className="focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--primary)]"
                 >
@@ -136,7 +158,7 @@ export function Header() {
               <nav aria-label="Mobile navigation" className="mt-12">
                 <ul className="space-y-5">
                   {navigation.map((item) => (
-                    <li key={`${item.href}-${item.label}`}>
+                    <motion.li key={`${item.href}-${item.label}`} variants={menuItemVariants}>
                       <Link
                         href={item.href}
                         onClick={() => setIsOpen(false)}
@@ -144,18 +166,19 @@ export function Header() {
                       >
                         {item.label}
                       </Link>
-                    </li>
+                    </motion.li>
                   ))}
                 </ul>
               </nav>
-              <a
+              <motion.a
                 href={salon.bookingWhatsapp}
                 target="_blank"
                 rel="noopener noreferrer"
+                variants={menuItemVariants}
                 className="mt-10 inline-flex min-h-14 items-center justify-center rounded-full bg-[var(--primary)] px-8 text-sm font-medium uppercase tracking-[0.08em] text-white"
               >
                 Book Appointment
-              </a>
+              </motion.a>
             </motion.div>
           </motion.div>
         ) : null}

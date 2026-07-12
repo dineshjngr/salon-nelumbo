@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { ChevronLeft, ChevronRight, Maximize2, X } from "lucide-react";
 import { Header } from "@/src/components/layout/Header";
 import { Footer } from "@/src/components/layout/Footer";
@@ -84,7 +84,7 @@ export default function GalleryPage() {
                   onClick={() => setActive(index)}
                   initial={{ opacity: 0, scale: 0.96 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.35 }}
+                  transition={{ duration: 0.35, delay: index * 0.04 }}
                   className={`group relative h-[420px] overflow-hidden rounded-[28px] text-left outline-none transition duration-500 hover:rounded-[20px] focus-visible:ring-2 focus-visible:ring-[var(--primary)] ${item.className}`}
                 >
                   <Image src={item.src} alt={item.alt} fill sizes="(min-width:1024px) 25vw, (min-width:768px) 50vw, 100vw" className="object-cover transition duration-700 group-hover:scale-105" />
@@ -116,25 +116,35 @@ export default function GalleryPage() {
       </main>
       <Footer />
 
-      {active !== null && visible[active] ? (
-        <div role="dialog" aria-modal="true" aria-label={`${visible[active].title} image`} className="fixed inset-0 z-[80] grid place-items-center bg-[#271D2C]/82 p-4 backdrop-blur-md">
-          <button ref={closeRef} type="button" onClick={() => setActive(null)} aria-label="Close gallery" className="absolute right-5 top-5 rounded-full bg-white p-3 text-[var(--primary)] focus-visible:ring-2 focus-visible:ring-white">
-            <X aria-hidden="true" className="h-5 w-5" />
-          </button>
-          <button type="button" onClick={() => setActive((active - 1 + visible.length) % visible.length)} aria-label="Previous image" className="absolute left-5 top-1/2 rounded-full bg-white/85 p-3 text-[var(--primary)]">
-            <ChevronLeft aria-hidden="true" className="h-5 w-5" />
-          </button>
-          <figure className="w-full max-w-5xl">
-            <div className="relative aspect-[16/10] overflow-hidden rounded-[28px] bg-white">
-              <Image src={visible[active].src} alt={visible[active].alt} fill sizes="90vw" className="object-cover" />
-            </div>
-            <figcaption className="mt-4 text-center font-serif text-3xl font-semibold text-white">{visible[active].title}</figcaption>
-          </figure>
-          <button type="button" onClick={() => setActive((active + 1) % visible.length)} aria-label="Next image" className="absolute right-5 top-1/2 rounded-full bg-white/85 p-3 text-[var(--primary)]">
-            <ChevronRight aria-hidden="true" className="h-5 w-5" />
-          </button>
-        </div>
-      ) : null}
+      <AnimatePresence>
+        {active !== null && visible[active] ? (
+          <motion.div
+            role="dialog"
+            aria-modal="true"
+            aria-label={`${visible[active].title} image`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[80] grid place-items-center bg-[#271D2C]/82 p-4 backdrop-blur-md"
+          >
+            <motion.button ref={closeRef} type="button" onClick={() => setActive(null)} aria-label="Close gallery" initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.95, opacity: 0 }} className="absolute right-5 top-5 rounded-full bg-white p-3 text-[var(--primary)] focus-visible:ring-2 focus-visible:ring-white">
+              <X aria-hidden="true" className="h-5 w-5" />
+            </motion.button>
+            <motion.button type="button" onClick={() => setActive((active - 1 + visible.length) % visible.length)} aria-label="Previous image" initial={{ x: -10, opacity: 0 }} animate={{ x: 0, opacity: 1 }} exit={{ x: -10, opacity: 0 }} className="absolute left-5 top-1/2 rounded-full bg-white/85 p-3 text-[var(--primary)]">
+              <ChevronLeft aria-hidden="true" className="h-5 w-5" />
+            </motion.button>
+            <motion.figure initial={{ y: 18, opacity: 0, scale: 0.98 }} animate={{ y: 0, opacity: 1, scale: 1 }} exit={{ y: 12, opacity: 0, scale: 0.98 }} transition={{ duration: 0.35 }} className="w-full max-w-5xl">
+              <div className="relative aspect-[16/10] overflow-hidden rounded-[28px] bg-white">
+                <Image src={visible[active].src} alt={visible[active].alt} fill sizes="90vw" className="object-cover" />
+              </div>
+              <figcaption className="mt-4 text-center font-serif text-3xl font-semibold text-white">{visible[active].title}</figcaption>
+            </motion.figure>
+            <motion.button type="button" onClick={() => setActive((active + 1) % visible.length)} aria-label="Next image" initial={{ x: 10, opacity: 0 }} animate={{ x: 0, opacity: 1 }} exit={{ x: 10, opacity: 0 }} className="absolute right-5 top-1/2 rounded-full bg-white/85 p-3 text-[var(--primary)]">
+              <ChevronRight aria-hidden="true" className="h-5 w-5" />
+            </motion.button>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "motion/react";
 import { ArrowRight } from "lucide-react";
 import { CategoryCard } from "@/src/components/home/CategoryCard";
 import { serviceCategories } from "@/src/data/service-categories";

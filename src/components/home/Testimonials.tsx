@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
+import { motion, useMotionValue, useReducedMotion, useSpring } from "motion/react";
 import { ChevronLeft, ChevronRight, Quote, Star } from "lucide-react";
 import { testimonials } from "@/src/data/testimonials";
 import { SectionHeading } from "@/src/components/ui/SectionHeading";

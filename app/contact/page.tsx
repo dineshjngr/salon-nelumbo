@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import { motion } from "motion/react";
 import { Calendar, CheckCircle2, MapPin, MessageCircle, Phone } from "lucide-react";
 import { Header } from "@/src/components/layout/Header";
 import { Footer } from "@/src/components/layout/Footer";
@@ -65,16 +66,30 @@ export default function ContactPage() {
                   label="Contact Details"
                   title={<>Reach the salon<br /><span className="italic text-[#9B72B3]">directly.</span></>}
                 />
-                <div className="mt-10 grid gap-4">
+                <motion.div
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.2 }}
+                  variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.07 } } }}
+                  className="mt-10 grid gap-4"
+                >
                   <ContactCard icon={Phone} title="Phone" detail={salon.phoneDisplay} href={salon.phoneHref} />
                   <ContactCard icon={MessageCircle} title="WhatsApp" detail={salon.phoneInternational} href={salon.whatsapp} external />
                   <ContactCard icon={MapPin} title="Location" detail={salon.location} href={salon.mapsUrl} external />
                   <ContactCard icon={Calendar} title="Opening" detail={salon.hours} />
-                </div>
+                </motion.div>
                 <OpeningStatus className="mt-6 w-full" />
               </div>
 
-              <form onSubmit={onSubmit} noValidate className="rounded-[34px] border border-[var(--border)] bg-white/76 p-5 shadow-[var(--shadow-md)] md:p-8">
+              <motion.form
+                onSubmit={onSubmit}
+                noValidate
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                className="rounded-[34px] border border-[var(--border)] bg-white/76 p-5 shadow-[var(--shadow-md)] md:p-8"
+              >
                 <h2 className="font-serif text-[30px] font-semibold text-[var(--text)] md:text-4xl">Appointment request</h2>
                 <p className="mt-3 text-sm leading-7 text-[var(--muted)]">This form prepares your details locally. A salon backend can be connected later.</p>
                 <div className="mt-8 grid gap-5 md:grid-cols-2">
@@ -105,7 +120,7 @@ export default function ContactPage() {
                 <button type="submit" className="mt-8 min-h-14 rounded-full bg-[var(--primary)] px-8 text-sm font-medium uppercase tracking-[0.08em] text-white transition hover:bg-[var(--primary-dark)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--primary)]">
                   Prepare Request
                 </button>
-              </form>
+              </motion.form>
             </div>
           </SiteContainer>
         </section>
@@ -114,9 +129,15 @@ export default function ContactPage() {
           <SiteContainer>
             <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
               <div>
-                <div className="rounded-[34px] border border-[var(--border)] bg-[#FAF7FC] p-6 shadow-[var(--shadow-md)] md:p-8">
+              <motion.div
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                className="rounded-[34px] border border-[var(--border)] bg-[#FAF7FC] p-6 shadow-[var(--shadow-md)] md:p-8"
+              >
                   <p className="text-xs font-medium uppercase tracking-[0.18em] text-[var(--primary)]">Salon Location</p>
-                  <h2 className="mt-5 font-serif text-[32px] font-semibold text-[var(--text)] md:text-5xl">Dubai, United Arab Emirates</h2>
+                  <h2 className="mt-5 font-serif text-[32px] font-semibold text-[var(--text)] md:text-5xl">Al Nahda 1, Dubai, UAE</h2>
                   <p className="mt-5 text-sm leading-7 text-[var(--muted)]">Salon Nelumbo is located in Al Nahda, Dubai, offering a peaceful and luxurious environment for beauty appointments.</p>
                   <div className="mt-8 flex flex-col gap-4 sm:flex-row">
                     <a
@@ -144,15 +165,22 @@ export default function ContactPage() {
                     description="Tap to open the salon location in Google Maps so you can plan your visit with ease."
                   />
                 </div>
-              </div>
-              <div className="overflow-hidden rounded-[34px] border border-[var(--border)] bg-[#EDE3F2]/80 shadow-[var(--shadow-md)]">
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                className="overflow-hidden rounded-[34px] border border-[var(--border)] bg-[#EDE3F2]/80 shadow-[var(--shadow-md)]"
+              >
                 <iframe
-                  src="https://www.google.com/maps?q=Salon%20Nelumbo%20Dubai&output=embed"
+                  src="https://www.google.com/maps?q=Salon%20Nelumbo%20Al%20Nahda%20Dubai&output=embed"
                   title="Salon Nelumbo map"
                   className="h-[380px] w-full border-0 md:h-[500px]"
                   loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
                 />
-              </div>
+              </motion.div>
             </div>
           </SiteContainer>
         </section>

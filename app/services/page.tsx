@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import { motion } from "motion/react";
 import { ArrowUpRight, Check, Sparkles } from "lucide-react";
 import { Header } from "@/src/components/layout/Header";
 import { Footer } from "@/src/components/layout/Footer";
@@ -98,16 +99,29 @@ export default function ServicesPage() {
               <div className="rounded-[26px] border border-[var(--border)] bg-[#F8F3FC] p-5 shadow-[var(--shadow-sm)] md:p-6">
                 <label className="block text-sm font-medium text-[var(--text)]">
                   Search services
-                  <input type="search" placeholder="Search Manicure, Facial, Waxing..." value={query} onChange={(event) => setQuery(event.target.value)} className="mt-3 min-h-12 w-full rounded-2xl border border-[var(--border)] bg-white px-4 text-[var(--text)] outline-none transition focus:border-[var(--primary)] focus:ring-2 focus:ring-[#542568]/20" />
+                  <input type="search" aria-label="Search beauty services" placeholder="Search Manicure, Facial, Waxing..." value={query} onChange={(event) => setQuery(event.target.value)} className="mt-3 min-h-12 w-full rounded-2xl border border-[var(--border)] bg-white px-4 text-[var(--text)] outline-none transition focus:border-[var(--primary)] focus:ring-2 focus:ring-[#542568]/20" />
                 </label>
               </div>
             </div>
-            <div className="mt-14 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.15 }}
+              variants={{
+                hidden: {},
+                visible: { transition: { staggerChildren: 0.08 } },
+              }}
+              className="mt-14 grid gap-6 md:grid-cols-2 xl:grid-cols-3"
+            >
               {filteredGroups.length > 0 ? (
                 filteredGroups.map((group) => (
-                  <article
+                  <motion.article
                     id={group.id}
                     key={group.id}
+                    variants={{
+                      hidden: { opacity: 0, y: 24, filter: "blur(8px)" },
+                      visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] } },
+                    }}
                     className="scroll-mt-40 rounded-[30px] border border-[var(--border)] bg-white/72 p-6 shadow-[var(--shadow-sm)] transition duration-300 hover:-translate-y-1 hover:border-[#542568]/30 hover:shadow-[var(--shadow-md)] md:p-7"
                   >
                     <div className="flex items-start justify-between gap-4">
@@ -128,7 +142,7 @@ export default function ServicesPage() {
                         </li>
                       ))}
                     </ul>
-                  </article>
+                  </motion.article>
                 ))
               ) : (
                 <div className="rounded-[30px] border border-[var(--border)] bg-white/72 p-10 text-center text-[var(--muted)] shadow-[var(--shadow-sm)]">
@@ -136,7 +150,7 @@ export default function ServicesPage() {
                   <p className="mt-3 text-sm leading-7">Try keywords like Hair, Makeup, Manicure, Waxing, or Threading.</p>
                 </div>
               )}
-            </div>
+            </motion.div>
           </SiteContainer>
         </section>
 
@@ -152,9 +166,25 @@ export default function ServicesPage() {
                 Package availability may change. Please contact Salon Nelumbo before visiting to confirm the current offer.
               </p>
             </div>
-            <div className="mt-14 grid gap-5 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.15 }}
+              variants={{
+                hidden: {},
+                visible: { transition: { staggerChildren: 0.06 } },
+              }}
+              className="mt-14 grid gap-5 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4"
+            >
               {packages.map((salonPackage) => (
-                <article key={salonPackage.id} className="rounded-[28px] border border-[var(--border)] bg-[#FAF7FC] p-5 shadow-[var(--shadow-sm)] md:p-6">
+                <motion.article
+                  key={salonPackage.id}
+                  variants={{
+                    hidden: { opacity: 0, y: 20 },
+                    visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] } },
+                  }}
+                  className="rounded-[28px] border border-[var(--border)] bg-[#FAF7FC] p-5 shadow-[var(--shadow-sm)] md:p-6"
+                >
                   <div className="flex items-start justify-between gap-4">
                     <div>
                       <p className="text-xs font-medium uppercase tracking-[0.14em] text-[var(--muted)]">Package {String(salonPackage.id).padStart(2, "0")}</p>
@@ -179,9 +209,9 @@ export default function ServicesPage() {
                     Book Package
                     <ArrowUpRight aria-hidden="true" className="ml-2 h-4 w-4 transition group-hover:rotate-45" />
                   </a>
-                </article>
+                </motion.article>
               ))}
-            </div>
+            </motion.div>
           </SiteContainer>
         </section>
       </main>

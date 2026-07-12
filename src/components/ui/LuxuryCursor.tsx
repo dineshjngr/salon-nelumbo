@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
-import { useReducedMotion } from "framer-motion";
+import { useReducedMotion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
 
 type CursorMode = "default" | "button" | "image" | "link" | "card";

@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import type { Variants } from "framer-motion";
+import { motion } from "motion/react";
+import type { Variants } from "motion/react";
 import { ArrowRight } from "lucide-react";
 import { Header } from "@/src/components/layout/Header";
 import { FeaturedCategories } from "@/src/components/home/FeaturedCategories";
@@ -22,6 +22,7 @@ import { HomeFAQ } from "@/src/components/home/HomeFAQ";
 import { HomeFooter } from "@/src/components/home/HomeFooter";
 import { ScrollProgress } from "@/src/components/ui/ScrollProgress";
 import { SiteContainer } from "@/src/components/ui/SiteContainer";
+import { FaqJsonLd } from "@/src/components/seo/FaqJsonLd";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
@@ -37,6 +38,8 @@ const fadeUp: Variants = {
 export default function Home() {
   return (
     <main className="min-h-screen bg-[#F8F3FC] text-[#241B2F]">
+      <FaqJsonLd />
+      <h1 className="sr-only">Salon Nelumbo beauty salon in Al Nahda, Dubai</h1>
       <ScrollProgress />
       <Header />
 
@@ -91,13 +94,13 @@ export default function Home() {
               </div>
               <div className="absolute inset-x-0 bottom-0 p-5">
                 <div className="max-w-[85%]">
-                  <h1 className="font-serif text-[40px] font-semibold leading-[0.92] text-white">
+                  <h2 className="font-serif text-[40px] font-semibold leading-[0.92] text-white">
                     Beauty
                     <br />
                     that feels
                     <br />
                     like you.
-                  </h1>
+                  </h2>
                   <p className="mt-4 max-w-[85%] text-[15px] leading-7 text-white/90">
                     Professional salon services designed to bring out your natural confidence.
                   </p>
@@ -190,7 +193,7 @@ export default function Home() {
               Beauty • Care • Relaxation
             </motion.p>
 
-            <motion.h1
+            <motion.h2
               custom={0.4}
               initial="hidden"
               animate="visible"
@@ -202,7 +205,7 @@ export default function Home() {
               that feels
               <br />
               <span className="text-[#9D77C2]">like you.</span>
-            </motion.h1>
+            </motion.h2>
 
             <motion.p
               custom={0.6}

@@ -11,7 +11,7 @@ import {
   useState,
   useSyncExternalStore,
 } from "react";
-import { AnimatePresence, animate, motion, useMotionValue, useReducedMotion } from "framer-motion";
+import { AnimatePresence, animate, motion, useMotionValue, useReducedMotion } from "motion/react";
 import { ArrowUpRight, Check, ChevronLeft, ChevronRight } from "lucide-react";
 import { packages, packageBookingUrl } from "@/src/data/packages";
 import { images } from "@/src/data/images";

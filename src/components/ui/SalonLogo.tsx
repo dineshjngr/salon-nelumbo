@@ -8,14 +8,14 @@ type SalonLogoProps = {
 export function SalonLogo({ className = "", priority = false }: SalonLogoProps) {
   return (
     <Image
-      src="/images/nelumbo-logo.png"
-      alt="Nelumbo Beauty Salon"
+      src="/images/logo.png"
+      alt="Salon Nelumbo"
       width={858}
       height={291}
       priority={priority}
       loading={priority ? "eager" : "lazy"}
       className={className}
-      style={{ backgroundColor: "transparent" }}
+      style={{ width: "auto", objectFit: "contain", backgroundColor: "transparent" }}
     />
   );
 }

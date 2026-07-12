@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "motion/react";
 import { SectionHeading } from "@/src/components/ui/SectionHeading";
 
 const comparisons = [

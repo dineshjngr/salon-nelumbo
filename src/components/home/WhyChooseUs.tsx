@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
 import { ImageReveal } from "@/src/components/ui/ImageReveal";
 import { SectionHeading } from "@/src/components/ui/SectionHeading";

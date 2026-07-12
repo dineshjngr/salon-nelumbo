@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "motion/react";
 import { Camera } from "lucide-react";
 import { galleryImages } from "@/src/data/images";
 import { salon } from "@/src/data/site-data";

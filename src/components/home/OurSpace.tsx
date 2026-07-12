@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { ChevronLeft, ChevronRight, Maximize2, X } from "lucide-react";
 import { SectionHeading } from "@/src/components/ui/SectionHeading";
 

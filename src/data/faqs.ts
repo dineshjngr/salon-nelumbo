@@ -1,8 +1,8 @@
 export const faqs = [
   {
-    question: "How do I book an appointment?",
+    question: "Do I need an appointment?",
     answer:
-      "You can contact Salon Nelumbo through WhatsApp or call the salon directly to request an available time.",
+      "Appointments are recommended. Call or WhatsApp Salon Nelumbo to request an available time for your preferred service.",
   },
   {
     question: "Are the AED 99 packages always available?",
@@ -10,23 +10,23 @@ export const faqs = [
       "Package availability may change. Please contact the salon before visiting to confirm the current offer.",
   },
   {
-    question: "Do I need to choose my service before booking?",
+    question: "Do you accept walk-ins?",
     answer:
-      "You may mention your preferred service when booking. The salon team can also help you select the most suitable option.",
+      "Walk-in availability can vary. Contact the salon before visiting so the team can confirm the next available time.",
   },
   {
-    question: "What should I bring to my appointment?",
+    question: "What are your opening hours?",
     answer:
-      "For most services, you only need to arrive at the confirmed time. The salon may provide additional guidance depending on your treatment.",
+      "Opening hours can change. Please call or WhatsApp Salon Nelumbo to confirm today’s opening hours before visiting.",
   },
   {
     question: "Where is Salon Nelumbo located?",
     answer:
-      "Salon Nelumbo is located in Dubai, United Arab Emirates. Contact the salon for the complete location details.",
+      "Salon Nelumbo is located on 4th Street in Al Nahda 1, Dubai, United Arab Emirates. Use the directions link or contact the salon before visiting.",
   },
   {
-    question: "Can I book for more than one person?",
+    question: "What payment methods are accepted?",
     answer:
-      "Group or multiple-person appointments may be possible depending on availability. Contact the salon in advance.",
+      "Please contact Salon Nelumbo before your appointment to confirm the currently accepted payment methods.",
   },
 ];

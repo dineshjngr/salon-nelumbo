@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "motion/react";
 import { MapPin } from "lucide-react";
 import { AnimatedCounter } from "@/src/components/ui/AnimatedCounter";
 import { SectionHeading } from "@/src/components/ui/SectionHeading";

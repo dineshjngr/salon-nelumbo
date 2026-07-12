@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
 import { teamMembers } from "@/src/data/team";
 import { SectionHeading } from "@/src/components/ui/SectionHeading";
